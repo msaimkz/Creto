@@ -901,7 +901,7 @@ body.nigth .logo-img-one {
 
 .section8 .sec8-card-container .sec8-card {
     width: 350px;
-    height: 550px;
+    /* height: 550px; */
     padding: 20px 15px;
     background-color: white;
     transition: 0.5s;

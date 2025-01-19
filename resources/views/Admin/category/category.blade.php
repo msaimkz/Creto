@@ -50,9 +50,10 @@
                         </thead>
                         <tbody>
                             @if($categories->isNotEmpty())
+
                             @foreach($categories as $category)
                             <tr>
-                                <td>{{$category->id - 11}}</td>
+                                <td>{{$category->id}}</td>
                                 <td>{{$category->name}}</td>
                                 <td>{{$category->slug}}</td>
                                 <td>

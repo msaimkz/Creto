@@ -38,7 +38,7 @@ class UserController extends Controller
     {
         $categoryID = '';
         $categories = Category::where('status', 1)->limit(3)->get();
-        $services = Service::where('status', 1)->get();
+        $services = Service::where('status', 1)->limit(3)->get();
         $coupon = Coupon::latest()->where('status', 1)
             ->where('start_at', '<=', Carbon::now())
             ->where('expire_at', '>=', Carbon::now())
@@ -50,6 +50,7 @@ class UserController extends Controller
         $products = Product::where('status', 1)->where("is_featured", "Yes");
         $TopProducts = Product::where('status', 1)->limit(4)->get();
         $news = news::where('status', 1)->where("is_Home", "Yes")->get();
+
 
 
         // Feedbacks 

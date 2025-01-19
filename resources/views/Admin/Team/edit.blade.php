@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                     <a href="{{ route('Admin-team') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </div>

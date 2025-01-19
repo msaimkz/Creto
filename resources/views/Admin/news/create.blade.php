@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                     <a href="{{route('news')}}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </div>
@@ -143,6 +143,8 @@ const dropzone = $("#image").dropzone({
             if (this.files.length > 1) {
                 this.removeFile(this.files[0]);
             }
+    $('button[type=submit]').prop('disabled', true)
+
         });
     },
     url:  "{{route('Temp-image')}}",
@@ -154,6 +156,8 @@ const dropzone = $("#image").dropzone({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }, success: function(file, response){
         $("#newsimage").val(response.Image_id);
+    $('button[type=submit]').prop('disabled', false)
+
         //console.log(response)
     }
 });
