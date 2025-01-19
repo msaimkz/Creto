@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap");
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 14px;
+    margin: 0;
+    color: #999;
+}
+
+input,
+textarea,
+select,
+button {
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul {
+    margin: 0;
+    font-family: "Teko", sans-serif;
+}
+
+img {
+    max-width: 100%;
+}
+
+ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+:focus {
+    outline: none;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inner {
+    position: relative;
+    width: 435px;
+}
+
+.image-1 {
+    position: absolute;
+    bottom: -12px;
+    left: -191px;
+    z-index: 99;
+}
+
+.image-2 {
+    position: absolute;
+    bottom: 0;
+    right: -129px;
+}
+
+form {
+    width: 100%;
+    position: relative;
+    z-index: 9;
+    padding: 77px 61px 66px;
+    background: #fff;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    -ms-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    -o-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+h3 {
+    text-transform: uppercase;
+    font-size: 35px;
+    font-family: "Teko";
+    color: #333;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 33px;
+}
+
+.form-holder {
+    position: relative;
+    margin-bottom: 21px;
+}
+.form-holder span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #333;
+}
+.form-holder span.lnr-lock {
+    left: 2px;
+}
+
+.form-controls {
+    border: none;
+    border-bottom: 1px solid #e6e6e6;
+    display: block;
+    width: 100%;
+    height: 38px;
+    background: none;
+    padding: 3px 42px 0px;
+    color: #666;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 16px;
+}
+.form-controls::-webkit-input-placeholder {
+    font-size: 14px;
+    font-family: "Roboto Condensed", sans-serif;
+    color: #999;
+    transform: translateY(1px);
+}
+.form-controls::-moz-placeholder {
+    font-size: 14px;
+    font-family: "Roboto Condensed", sans-serif;
+    color: #999;
+    transform: translateY(1px);
+}
+.form-controls:-ms-input-placeholder {
+    font-size: 14px;
+    font-family: "Roboto Condensed", sans-serif;
+    color: #999;
+    transform: translateY(1px);
+}
+.form-controls:-moz-placeholder {
+    font-size: 14px;
+    font-family: "Roboto Condensed", sans-serif;
+    color: #999;
+    transform: translateY(1px);
+}
+.form-controls:focus {
+    border-bottom: 1px solid #ffdb1d;
+}
+ p{
+  color: red;
+  font-size: 14px;
+  font-family: "Roboto Condensed", sans-serif;
+  margin-top: 20px;
+}
+
+button {
+    border: none;
+    width: 90%;
+    height: 49px;
+    margin-top: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #ffdb1d;
+    color: #000;
+    text-transform: uppercase;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: all 0.5s;
+    border: 2px solid #ffdb1d;
+    position: relative;
+    overflow: hidden;
+}
+button span {
+    position: relative;
+    z-index: 2;
+}
+button:hover {
+    background-color: transparent;
+}
+.form-holders{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Roboto Condensed", sans-serif;
+
+}
+
+.form-holders div{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.form-holders div input{
+  border-radius:4px;
+}
+.form-holders div a{
+  color: #666;
+  text-decoration: underline;
+}
+.forget-password{
+    color: #666;
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
+.auth-anchor{
+    position: absolute;
+    top: 60px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    right: 70px;
+}
+.auth-anchor:hover{
+    color: #ffdb1d;
+}
