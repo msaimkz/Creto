@@ -21,6 +21,7 @@ use App\Http\Controllers\SubcriberController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\AdminInfoContoller;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -187,60 +188,54 @@ Route::middleware(['auth', 'admin'])->group(function () {
   Route::post('/Admin/Send-Subscription', [SubcriberController::class, 'send'])->name('Send-Subscriber');
 });
 
+Route::middleware(['verified',"MustEmailVerify"])->group(function(){
 // User  Routes
-Route::get('/{category?}', [UserController::class, 'home'])->name('index');
-Route::get('/Creto/Service', [UserController::class, 'service'])->name('service');
-Route::get('/Creto/Shop/{category?}/{male?}', [UserController::class, 'shop'])->name('shop');
-Route::get('/Creto/Gallery', [UserController::class, 'gallery'])->name('gallery');
-Route::get('/Creto/About-Us', [UserController::class, 'about'])->name('about');
-Route::get('/Creto/Contact-Us', [UserController::class, 'contact'])->name('contact');
-Route::get('/Creto/Product-Detail/{slug}', [UserController::class, 'Product'])->name('Product');
-Route::get('/Creto/My-Cart', [UserController::class, 'Cart'])->name('Cart');
-Route::get('/Creto/My-Wishlist', [UserController::class, 'Wishlist'])->middleware('auth')->name('Wishlist');
-Route::get('/Creto/Checkout', [UserController::class, 'Checkout'])->middleware('auth')->name('Checkout');
-Route::get('/Creto/My-Orders', [UserController::class, 'Order'])->middleware('auth')->name('Order');
-Route::get('/Creto/Order-Detail/{id}', [UserController::class, 'OrderDetail'])->middleware('auth')->name('Order-Detail');
-Route::get('/Creto/News-Detail/{id}', [UserController::class, 'BlogDetail'])->name('Blog-Detail');
-Route::get('/Creto/News-detail/{slug}', [UserController::class, 'serviceDetail'])->name('Service-Detail');
-Route::get('/Creto/News', [UserController::class, 'News'])->name('News');
-Route::get('/Creto/404', [UserController::class, 'PageError'])->name('Page-Error');
-Route::get('/Creto/Thanks/{id}', [UserController::class, 'Thanks'])->middleware('auth')->name('Thanks-Page');
-Route::post('/Creto/Send-Contact-Email', [UserController::class, 'SendContactEmal'])->name('Send-Contact-Email');
-Route::post('/Creto/Send-Feedback', [FeedbackController::class, 'store'])->name('Send-Feedback');
-Route::post('/Creto/Store-Subcriber', [SubcriberController::class, 'store'])->name('Store-Subscriber');
-Route::post('/Creto/Store-Rating/{id}', [RatingController::class, 'store'])->name('Store-Rating');
-Route::get('/Creto/Download-Order-PDF/{id}', [UserController::class, 'DownloadPDF'])->middleware('auth')->name('Download-Order-PDF');
-Route::get('/Creto/Cancel-Order/{id}', [UserController::class, 'OrderCancel'])->middleware('auth')->name('order-cancel');
-
-// Exchange Order Routes
-Route::get('/Creto/Order-Exchange/{id}', [OrderController::class, 'ExchangeOrder'])->middleware('auth')->name('Exchange-order');
-Route::post('/Creto/Get-Order-Product/{', [OrderController::class, 'getproducts'])->middleware('auth')->name('get-products');
-Route::post('/Creto/Get-Exchange-Product/{', [OrderController::class, 'getexchangeproduct'])->middleware('auth')->name('get-exchange-product');
-
-
-
-
-// Cart Route
-
-Route::post('/Creto/Add-To-Cart', [CartController::class, "AddtoCart"])->name("Add-to-Cart");
-Route::post('/Creto/Update-Cart', [CartController::class, "UpdateCart"])->name("Update-Cart");
-Route::post('/Creto/Check-Cart', [CartController::class, "CheckCart"])->name("Check-Cart");
-Route::post('/Creto/Delete-Cart', [CartController::class, "DeleteCart"])->name("Delete-Cart");
-Route::post('/Creto/Proceed', [CartController::class, "proceed"])->name("Proceed");
-Route::post('/Creto/Get-Order-Summary', [CartController::class, "getOrderSummary"])->name("getOrderSummary");
-Route::post('/Creto/Get-Discount-Summary', [CartController::class, "GetDiscountSummary"])->name("Get-Discount-Summary");
-Route::post('/Creto/Remove-Coupon', [CartController::class, "RemoveCoupon"])->name("Remove-Coupon");
-
-
-
-// Wishlist Routes
-Route::post('/Creto/Store-Wishlist', [WishlistController::class, 'store'])->name('Store-Wishlist');
-Route::delete('/Creto/Remove-Wishlist/{id}', [WishlistController::class, 'destroy'])->name('Remove-Wishlist');
+  Route::get('/{category?}', [UserController::class, 'home'])->name('index');
+  Route::get('/Creto/Service', [UserController::class, 'service'])->name('service');
+  Route::get('/Creto/Shop/{category?}/{male?}', [UserController::class, 'shop'])->name('shop');
+  Route::get('/Creto/Gallery', [UserController::class, 'gallery'])->name('gallery');
+  Route::get('/Creto/About-Us', [UserController::class, 'about'])->name('about');
+  Route::get('/Creto/Contact-Us', [UserController::class, 'contact'])->name('contact');
+  Route::get('/Creto/Product-Detail/{slug}', [UserController::class, 'Product'])->name('Product');
+  Route::get('/Creto/My-Cart', [UserController::class, 'Cart'])->name('Cart');
+  Route::get('/Creto/My-Wishlist', [UserController::class, 'Wishlist'])->middleware('auth')->name('Wishlist');
+  Route::get('/Creto/Checkout', [UserController::class, 'Checkout'])->middleware('auth')->name('Checkout');
+  Route::get('/Creto/My-Orders', [UserController::class, 'Order'])->middleware('auth')->name('Order');
+  Route::get('/Creto/Order-Detail/{id}', [UserController::class, 'OrderDetail'])->middleware('auth')->name('Order-Detail');
+  Route::get('/Creto/News-Detail/{id}', [UserController::class, 'BlogDetail'])->name('Blog-Detail');
+  Route::get('/Creto/News-detail/{slug}', [UserController::class, 'serviceDetail'])->name('Service-Detail');
+  Route::get('/Creto/News', [UserController::class, 'News'])->name('News');
+  Route::get('/Creto/404', [UserController::class, 'PageError'])->name('Page-Error');
+  Route::get('/Creto/Thanks/{id}', [UserController::class, 'Thanks'])->middleware('auth')->name('Thanks-Page');
+  Route::post('/Creto/Send-Contact-Email', [UserController::class, 'SendContactEmal'])->name('Send-Contact-Email');
+  Route::post('/Creto/Send-Feedback', [FeedbackController::class, 'store'])->name('Send-Feedback');
+  Route::post('/Creto/Store-Subcriber', [SubcriberController::class, 'store'])->name('Store-Subscriber');
+  Route::post('/Creto/Store-Rating/{id}', [RatingController::class, 'store'])->name('Store-Rating');
+  Route::get('/Creto/Download-Order-PDF/{id}', [UserController::class, 'DownloadPDF'])->middleware('auth')->name('Download-Order-PDF');
+  Route::get('/Creto/Cancel-Order/{id}', [UserController::class, 'OrderCancel'])->middleware('auth')->name('order-cancel');
 
 
 
 
 
+  // Cart Route
+
+  Route::post('/Creto/Add-To-Cart', [CartController::class, "AddtoCart"])->name("Add-to-Cart");
+  Route::post('/Creto/Update-Cart', [CartController::class, "UpdateCart"])->name("Update-Cart");
+  Route::post('/Creto/Check-Cart', [CartController::class, "CheckCart"])->name("Check-Cart");
+  Route::post('/Creto/Delete-Cart', [CartController::class, "DeleteCart"])->name("Delete-Cart");
+  Route::post('/Creto/Proceed', [CartController::class, "proceed"])->name("Proceed");
+  Route::post('/Creto/Get-Order-Summary', [CartController::class, "getOrderSummary"])->name("getOrderSummary");
+  Route::post('/Creto/Get-Discount-Summary', [CartController::class, "GetDiscountSummary"])->name("Get-Discount-Summary");
+  Route::post('/Creto/Remove-Coupon', [CartController::class, "RemoveCoupon"])->name("Remove-Coupon");
+
+
+
+  // Wishlist Routes
+  Route::post('/Creto/Store-Wishlist', [WishlistController::class, 'store'])->name('Store-Wishlist');
+  Route::delete('/Creto/Remove-Wishlist/{id}', [WishlistController::class, 'destroy'])->name('Remove-Wishlist');
+
+});
 
 
 // GetSlug Route
@@ -260,5 +255,7 @@ Route::get('Admin/getSlug', function (Request $request) {
 
 Route::post('/Temp-Images', [TempImageController::class, 'create'])->name('Temp-image');
 
+Route::get('Creto/verify-email', [RegisteredUserController::class, 'email'])
+->name('EmailVerify');
 
 require __DIR__ . '/auth.php';

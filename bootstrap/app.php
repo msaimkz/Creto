@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
          "admin" => App\Http\Middleware\RoleAccess::class,
          "sessionCheck" => App\Http\Middleware\SessionCheck::class,
+         "MustEmailVerify" => App\Http\Middleware\MustVerifyEmail::class,
          "restrict" => App\Http\Middleware\Restrict::class,
         ]);
     })

@@ -156,12 +156,6 @@
 </div>
 @endif
 
-@if($order->delivery_status == 'delivered')
-
-<div class="exchange-button-container">
-<a href="{{ route('Exchange-order',$order->id) }}"  class="exchange-button">Exchange</a>
-</div>
-@endif
 @endsection
 
 @section('js')

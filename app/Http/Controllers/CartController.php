@@ -281,7 +281,7 @@ class CartController extends Controller
             $product->save();
         }
 
-        OrderEmail($order->id, 'customer');
+        // OrderEmail($order->id, 'customer');
 
 
         Cart::destroy();

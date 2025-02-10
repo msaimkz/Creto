@@ -5,9 +5,9 @@
     <div class="Product-sub-section sec7-dark">
         <h1 class="dark-icon">About Us</h1>
         <div>
-            <a href="./index.html" class="dark-anchor">Home</a>
+            <a href="{{ route('index') }}" class="dark-anchor">Home</a>
             <span class="dark-icon">/</span>
-            <a href="./about.html" class="dark-anchor">About Us</a>
+            <a href="{{ route('about')}}" class="dark-anchor">About Us</a>
         </div>
     </div>
 </div>
@@ -61,17 +61,17 @@
 <div class="about-count-down-section">
     <div class="count-down-container">
         <div class="count-down-card">
-            <span class="num" data-val="{{ $customers }}">0000</span>
+            <span class="num" data-val="{{ (!empty($customers) ? $customers : 0 ) }}">0000</span>
             <div></div>
             <h2>Customer</h2>
         </div>
         <div class="count-down-card">
-            <span class="num" data-val="{{ $orders }}">0000</span>
+            <span class="num" data-val="{{ (!empty($orders) ? $orders : 0 ) }}">0000</span>
             <div></div>
             <h2>Complete Orders</h2>
         </div>
         <div class="count-down-card">
-            <span class="num" data-val="{{ $products }}">000</span>
+            <span class="num" data-val="{{ (!empty($products) ? $products : 0 ) }}">000</span>
             <div></div>
             <h2>Products</h2>
         </div>

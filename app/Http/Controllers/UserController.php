@@ -81,13 +81,15 @@ class UserController extends Controller
     }
     public function shop(Request $request, $categorySlug = null)
     {
-        $categories = Category::where('status', 1)->get();
-        $brands = brand::where('status', 1)->get();
+        $categories = Category::where('status', 1)->limit(5)->get();
+        $brands = brand::where('status', 1)->limit(5)->get();
         $categoryID = '';
         $brandArray = [];
         $genderArray = [];
 
         $products = Product::where('status', 1);
+
+        
 
 
 
@@ -291,7 +293,7 @@ class UserController extends Controller
     public function OrderDetail($orderId)
     {
 
-        $order = Order::find($orderId);
+        $order = Order::where(['id'=> $orderId , 'user_id' => Auth::id()]) ->first();
 
         
         if (empty($order)) {

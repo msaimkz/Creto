@@ -42,7 +42,6 @@ class TeamController extends Controller
 
     $validator = Validator::make($request->all(),[
         'name' => 'required|min:3',
-        'slug' => 'required|unique:teams',
         'designation' => 'required|',
         'status' => 'required',
          
@@ -60,7 +59,6 @@ class TeamController extends Controller
 
          $team = new Team();
          $team->name = $request->name;
-         $team->slug = $request->slug;
          $team->designation = $request->designation;
          $team->facebook_url = $request->facebook;
          $team->youtube_url = $request->youtube;
@@ -150,7 +148,6 @@ class TeamController extends Controller
     
         $validator = Validator::make($request->all(),[
             'name' => 'required|min:3',
-            'slug' => 'required|unique:teams,slug,'.$team->id.',id',
             'designation' => 'required|',
             'status' => 'required',
              
@@ -162,7 +159,6 @@ class TeamController extends Controller
     
 
              $team->name = $request->name;
-             $team->slug = $request->slug;
              $team->designation = $request->designation;
              $team->facebook_url = $request->facebook;
              $team->youtube_url = $request->youtube;

@@ -157,7 +157,7 @@
                     <a href="https://www.youtube.com/" target="blank"> <i
                             class="fa-brands fa-youtube dark-anchor"></i></a>
                 </div>
-                <p>Questions? Please write us at <a href="#" class="dark-anchor"> rovadex@gmail.com</a></p>
+                <p>Questions? Please write us at <a href="#" class="dark-anchor">creto@gmail.com</a></p>
             </div>
             <div class="footer-link">
                 <div class="fooer-sub-link">

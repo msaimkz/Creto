@@ -88,49 +88,4 @@ class OrderController extends Controller
   
  } 
 
-
-
- public function getexchangeproduct(Request $request){
-
-   $productID = $request->product_id;
-   $itemId= $request->item_id;
-
-   
-   $product =  product::where('status',1)->find($productID);
-
-    
-   $qty = 1;
-   $total = $product->price * $qty;
-
-   return response()->json([
-    'status' => true,
-    'price' => number_format($product->price,2),
-    'total' => number_format($total,2),
-    'qty' => $qty,
-    'itemId' => $itemId,
-   ]);
-
-
- }
-
-    public function ExchangeOrder(Request $request, $id)
-    {
-       
-      $order = Order::find($id);
-        if(empty($order)){ 
-            return redirect()->route('Page-Error');
-        }
-
-        $countries = Country::orderBy('name', 'ASC')->get();
-        $orderItemsCount = OrderItem::where('order_id', $order->id)->count();
-        $orderItems = OrderItem::where('order_id', $order->id)->get();
-        $products = Product::where('status', 1)
-        ->where('qty', '>', 0)
-        ->get();
-
-
-
-
-        return view('User.exchange',compact('order','countries','orderItemsCount','orderItems','products'));
-    }
 }
