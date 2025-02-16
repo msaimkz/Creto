@@ -34,9 +34,9 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'slug' => 'required|unique:services',
-            'description' => 'required|',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:services',
+            'description' => 'required|min:10',
             'is_Home' => 'required|in:Yes,No',
             'status' => 'required',
 
@@ -129,9 +129,9 @@ class ServiceController extends Controller
             ]);
         }
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'slug' => 'required|unique:services,slug,' . $service->id . ',id',
-            'description' => 'required|',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:services,slug,' . $service->id . ',id',
+            'description' => 'required|min:10',
             'is_Home' => 'required|in:Yes,No',
             'status' => 'required',
 

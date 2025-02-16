@@ -20,8 +20,8 @@ class BrandCnotroller extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
-            'slug' => 'required|unique:brands',
+            'name' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:brands',
          ]);
  
          if($validator->passes()){
@@ -48,10 +48,6 @@ class BrandCnotroller extends Controller
     }
 
    
-    public function show(string $id)
-    {
-        //
-    }
 
     public function edit(string $id)
     {
@@ -77,8 +73,8 @@ class BrandCnotroller extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
-            'slug' => 'required|unique:brands,slug,'.$brand->id.',id',
+            'name' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:brands,slug,'.$brand->id.',id',
          ]);
  
          if($validator->passes()){

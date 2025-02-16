@@ -93,7 +93,7 @@
                                     <div class="col-4 col-md-3 col-xl-2">
                                         <!-- Image -->
                                         @if(!empty($img))
-                                        <a href="product.html"><img
+                                        <a href="#"><img
                                                 src="{{asset('uploads/product/small/'.$img->image)}}" alt="..."
                                                 class="img-fluid order-img">
                                         </a>
@@ -103,7 +103,7 @@
                                     <div class="col">
                                         <!-- Title -->
                                         <p class="mb-4 fs-sm fw-bold order-text">
-                                            <a class="text-body nav-nigth" href="product.html">{{$orderItem->name}} x
+                                            <a class="text-body nav-nigth" href="#">{{$orderItem->name}} x
                                                 {{$orderItem->qty}}</a>
                                             <br>
                                             <span

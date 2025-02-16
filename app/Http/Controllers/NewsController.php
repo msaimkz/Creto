@@ -24,11 +24,11 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'title' => 'required',
-            'slug' => 'required|unique:news',
-            'writer'=>'required',
-            'description' => 'required|',
-            'short_description'=> 'required',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:news',
+            'writer'=>'required|min:3|min:30|regex:/^[a-zA-Z\s]+$/',
+            'description' => 'required|min:10',
+            'short_description'=> 'required|min:7|max:150',
             'is_Home' => 'required|in:Yes,No',
             'status' => 'required',
              
@@ -126,11 +126,11 @@ class NewsController extends Controller
              ]);
         } 
         $validator = Validator::make($request->all(),[
-            'title' => 'required',
-            'slug' => 'required|unique:news,slug,'.$news->id.',id',
-            'writer'=>'required',
-            'description' => 'required|',
-            'short_description'=> 'required',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:news,slug,'.$news->id.',id',
+            'writer'=>'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
+            'description' => 'required|min:10',
+            'short_description'=> 'required|min:7|max:150',
             'is_Home' => 'required|in:Yes,No',
             'status' => 'required',
              

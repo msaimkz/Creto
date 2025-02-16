@@ -45,8 +45,7 @@
                                 <th width="60">ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Phone</th>
-                                <th>Country</th>
+                                <th>Phone No</th>
 
                                 <th>Registration Date</th>
                                 <th width="100">Actions</th>
@@ -55,9 +54,7 @@
                         <tbody>
                             @if(!empty($users))
                             @foreach($users as $user)
-                            @php
-                            $country = country($user->country_id)
-                            @endphp
+                            
                             <tr>
                                 <td>
                                     {{ $user->id }}
@@ -65,7 +62,6 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{  $user->mobile  }}</td>
-                                <td>{{ ($country != null) ? $country->name : 'n/a' }}</td>
 
                                 <td>{{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}</td>
 

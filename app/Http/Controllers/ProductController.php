@@ -29,8 +29,8 @@ class ProductController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'slug' => 'required|unique:products',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:products',
             'description' => 'required|',
             'shipping' => 'required',
             'price' => 'required|numeric',
@@ -161,8 +161,8 @@ class ProductController extends Controller
             ]);
         }
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'slug' => 'required|unique:products,slug,' . $product->id . ',id',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:products,slug,' . $product->id . ',id',
             'description' => 'required|',
             'shipping' => 'required',
             'price' => 'required|numeric',

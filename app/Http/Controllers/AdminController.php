@@ -194,8 +194,7 @@ class AdminController extends Controller
     public function user(Request $request)
     {
 
-        $users = User::where('role', 0)->latest('users.created_at')->select('users.*', 'customer_details.mobile', 'customer_details.country_id')
-            ->leftJoin('customer_details', 'users.id', '=', 'customer_details.user_id');
+        $users = User::where('role', 0)->latest();
 
         if (!empty($request->keyword)) {
             $users = $users->where('users.name', 'like', '%' . $request->keyword . '%');
@@ -205,6 +204,7 @@ class AdminController extends Controller
         }
 
 
+        
 
         $users = $users->paginate(8);
 

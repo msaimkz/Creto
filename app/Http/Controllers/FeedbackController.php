@@ -30,7 +30,7 @@ class FeedbackController extends Controller
        
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|alpha|min:3',
+            'name' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email',
             'message' => 'required|min:10',
         ]);

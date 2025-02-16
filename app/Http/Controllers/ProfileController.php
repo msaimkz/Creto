@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\tempimage;
+use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -61,6 +62,15 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s]+$/'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,id,'. Auth::id() .',id'],
+            'mobile' => ['required', 'numeric', 'min:11', 'regex:/^0[3-9][0-9]{2}[0-9]{7}$/'],
+        ], [
+            'name.pattern' => "name must be alphabetical letter ",
+        ]);
+
         $user = $request->user();
 
        

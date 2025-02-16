@@ -143,15 +143,15 @@ class CartController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|min:3',
-            'last_name' => 'required',
+            'first_name' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
+            'last_name' => 'required|min:2|max:30|regex:/^[a-zA-Z\s]+$/',
             'email' => 'required|email',
             'country' => 'required',
             'address' => 'required|min:15',
-            'city' => 'required',
-            'state' => 'required',
+            'city' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
+            'state' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
             'zip' => 'required',
-            'mobile' => 'required',
+            'mobile' => 'required|regex:/^0[3-9][0-9]{2}[0-9]{7}$/',
         ]);
 
 
@@ -281,7 +281,7 @@ class CartController extends Controller
             $product->save();
         }
 
-        // OrderEmail($order->id, 'customer');
+        OrderEmail($order->id, 'customer');
 
 
         Cart::destroy();

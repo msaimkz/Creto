@@ -43,7 +43,7 @@
                                     <input type="text" name="name" id="name" placeholder="Enter Your Name"
                                         class="form-control profile-input" value="{{old('name', $user->name)}}" required
                                         autofocus autocomplete="name">
-                                    <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                                    <span class="text-danger mt-2" >{{ implode(', ', $errors->get('name')) }}</span>
                                 </div>
 
                                 <div class="mb-3">
@@ -51,33 +51,18 @@
                                     <input type="email" name="email" id="email" placeholder="Enter Your Email"
                                         class="form-control profile-input" value="{{old('email', $user->email)}}"
                                         required autocomplete="username">
-                                    <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                                        <span class="text-danger mt-2" >{{ implode(', ', $errors->get('email')) }}</span>
 
-                                    @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !
-                                    $user->hasVerifiedEmail())
-                                    <div>
-                                        <p class="text-sm mt-2 text-gray-800">
-                                            {{ __('Your email address is unverified.') }}
 
-                                            <button form="send-verification"
-                                                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                                {{ __('Click here to re-send the verification email.') }}
-                                            </button>
-                                        </p>
-
-                                        @if (session('status') === 'verification-link-sent')
-                                        <p class="mt-2 font-medium text-sm text-green-600">
-                                            {{ __('A new verification link has been sent to your email address.') }}
-                                        </p>
-                                        @endif
-                                    </div>
-                                    @endif
+                                   
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="profile-label" for="phone">Phone</label>
                                     <input type="text" name="mobile" id="mobile" placeholder="Enter Your Phone"
                                         class="form-control profile-input" value="{{old('mobile', $user->mobile)}}">
+                                    <span class="text-danger mt-2" >{{ implode(', ', $errors->get('mobile')) }}</span>
+
                                 </div>
 
                                 <div class="d-flex profile-button-container">

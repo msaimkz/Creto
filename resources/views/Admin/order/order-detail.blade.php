@@ -37,7 +37,7 @@
                                     <h1 class="h5 mb-3">Shipping Address</h1>
                                     <address>
                                         <strong>{{$order->first_name}} {{$order->last_name}}</strong><br>
-                                        {{ $order->address }}<br>
+                                        {{ $order->address }}<br>{{ $order->city }}
                                         {{ $order->state }}, {{ $order->zip }} {{ $country->name }} <br>
                                         Phone: {{ $order->mobile }}<br>
                                         Email: {{ $order->email }}

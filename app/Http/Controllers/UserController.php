@@ -89,7 +89,7 @@ class UserController extends Controller
 
         $products = Product::where('status', 1);
 
-        
+
 
 
 
@@ -173,7 +173,7 @@ class UserController extends Controller
 
     public function Product(string $slug)
     {
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::where(['slug' =>  $slug , 'status' => 1 ])->first();
 
         if (empty($product)) {
 
@@ -265,14 +265,15 @@ class UserController extends Controller
             if ($shippinginfo != null) {
 
                 $shippingcharges = $shippinginfo->amount * $total;
-                $grandtotal = ($subtotal - $discount)  + $shippingcharges;
+              
             } else {
 
                 $shipping = ShippingCharge::where('country_id', 'rest_of_world')->first();
                 $shippingcharges = $shipping->amount * $total;
-                $grandtotal = ($subtotal - $discount)  + $shippingcharges;
             }
         }
+
+        $grandtotal = ($subtotal - $discount)  + $shippingcharges;
 
         return view('User.checkout', compact('countries', 'Customers', 'shippingcharges', 'grandtotal', 'discount'));
     }
@@ -293,9 +294,9 @@ class UserController extends Controller
     public function OrderDetail($orderId)
     {
 
-        $order = Order::where(['id'=> $orderId , 'user_id' => Auth::id()]) ->first();
+        $order = Order::where(['id' => $orderId, 'user_id' => Auth::id()])->first();
 
-        
+
         if (empty($order)) {
 
             return redirect()->route('Page-Error');
@@ -334,8 +335,8 @@ class UserController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|alpha|min:3',
-            'phone' => 'required|numeric|digits:11',
+            'name' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
+            'phone' => 'required|regex:/^0[3-9][0-9]{2}[0-9]{7}$/',
             'email' => 'required|email',
             'message' => 'required|min:10'
         ]);
@@ -393,7 +394,7 @@ class UserController extends Controller
     {
         $order = Order::where('id', $orderId)->with('items')->first();
         $data['order'] = $order;
-        
+
 
         $pdf = Pdf::loadView('pdf.order', $data)->setOptions(['defaultFont' => 'sans-serif']);
         return $pdf->download('order.pdf');
@@ -430,7 +431,7 @@ class UserController extends Controller
 
 
 
-    public function PageError(Request $request)
+    public function PageError()
     {
         return view('User.404');
     }

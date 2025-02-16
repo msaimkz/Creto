@@ -27,7 +27,7 @@ class ShippingController extends Controller
     {
         $validator = Validator::make($request->all(),[
           'country_id' => 'required',
-          'amount' => 'required|numeric',
+          'amount' => 'required|numeric|min:10',
         ]);
 
 

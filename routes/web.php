@@ -188,7 +188,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
   Route::post('/Admin/Send-Subscription', [SubcriberController::class, 'send'])->name('Send-Subscriber');
 });
 
-Route::middleware(['verified',"MustEmailVerify"])->group(function(){
+Route::middleware(["MustEmailVerify"])->group(function(){
 // User  Routes
   Route::get('/{category?}', [UserController::class, 'home'])->name('index');
   Route::get('/Creto/Service', [UserController::class, 'service'])->name('service');

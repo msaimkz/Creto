@@ -17,8 +17,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-           'name' => 'required',
-           'slug' => 'required|unique:categories',
+           'name' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+           'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:categories',
         ]);
 
         if($validator->passes()){
@@ -70,8 +70,8 @@ class CategoryController extends Controller
             ]);
         }
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
-            'slug' => 'required|unique:categories,slug,'.$category->id.',id',
+            'name' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:categories,slug,'.$category->id.',id',
          ]);
  
          if($validator->passes()){
