@@ -130,6 +130,7 @@
                         this.removeFile(this.files[0]);
                     }
                     $('button[type=submit]').prop('disabled', true)
+                    $(".loading-container").addClass("active")
 
                 });
             },
@@ -144,6 +145,8 @@
             success: function(file, response) {
                 $("#serviceimage").val(response.Image_id);
                 $('button[type=submit]').prop('disabled', false)
+                $(".loading-container").removeClass("active")
+
 
                 //console.log(response)
             }
@@ -155,6 +158,8 @@
             event.preventDefault();
             var element = $(this)
             $('button[type=submit]').prop('disabled', true)
+            $(".loading-container").addClass("active")
+
             $.ajax({
                 url: '{{ route('Store-Service') }}',
                 type: 'post',
@@ -162,6 +167,8 @@
                 dataType: 'json',
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $(".loading-container").removeClass("active")
+
                     if (response['status'] == true) {
                         $('.error').removeClass('invalid-feedback').html('')
                         $('input,select,textarea').removeClass('is-invalid')
@@ -192,6 +199,8 @@
         $('#title').change(function() {
             var element = $(this).val();
             $('button[type=submit]').prop('disabled', true)
+            $(".loading-container").addClass("active")
+
             $.ajax({
                 url: '{{ route('GetSlug') }}',
                 type: 'get',
@@ -201,6 +210,8 @@
                 dataType: 'json',
                 success: function(respose) {
                     $('button[type=submit]').prop('disabled', false)
+                    $(".loading-container").removeClass("active")
+
                     $('#slug').val(respose['slug']);
                 }
             })

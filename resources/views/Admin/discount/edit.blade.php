@@ -153,6 +153,8 @@ $('#DiscountForm').submit(function(event) {
     event.preventDefault();
     var element = $(this)
     $('button[type=submit]').prop('disabled', true)
+    $(".loading-container").addClass("active")
+
     $.ajax({
         url: '{{route("Update-Dicount-Coupon",$coupon->id)}}',
         type: 'post',
@@ -160,14 +162,16 @@ $('#DiscountForm').submit(function(event) {
         dataType: 'json',
         success: function(response) {
             $('button[type=submit]').prop('disabled', false)
+            $(".loading-container").removeClass("active")
+
             if (response['status'] == true) {
 
 
-                window.location.href = '{{route("discount")}}'
                 $('#code').removeClass('is-invalid').siblings('p').removeClass('invalid-feedback')
-                    .html('')
+                .html('')
                 $('#discount_amount').removeClass('is-invalid').siblings('p').removeClass('invalid-feedback')
-                    .html('')
+                .html('')
+                window.location.href = '{{route("discount")}}'
 
             } else {
                 var error = response['errors']

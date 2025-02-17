@@ -72,6 +72,7 @@
 <script>
 $('#SendSubscriptionForm').submit(function(event){
 event.preventDefault()
+$(".loading-container").addClass("active")
 $('#button').prop('disabled',true)
 
 $.ajax({
@@ -85,6 +86,7 @@ $.ajax({
     dataType:'json',
     success: function(response){
         $('#button').prop('disabled',false)
+        $(".loading-container").removeClass("active")
 
 
         if(response.status == true){

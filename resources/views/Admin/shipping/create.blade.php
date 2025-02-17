@@ -116,6 +116,8 @@ $('#ShippingForm').submit(function(event) {
     event.preventDefault();
     var element = $(this)
     $('button[type=submit]').prop('disabled', true)
+    $(".loading-container").addClass("active")
+
     $.ajax({
         url: '{{route("Store-shipping")}}',
         type: 'post',
@@ -123,6 +125,8 @@ $('#ShippingForm').submit(function(event) {
         dataType: 'json',
         success: function(response) {
             $('button[type=submit]').prop('disabled', false)
+            $(".loading-container").removeClass("active")
+
             if (response['status'] == true) {
                 window.location.href = '{{ route("Shipping") }}'
 

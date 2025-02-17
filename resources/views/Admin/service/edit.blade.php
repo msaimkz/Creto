@@ -75,8 +75,8 @@
                                 <div class="col-md-3">
                                     <div class="card">
                                         <input type="hidden" name="img_array" value="{{ $service->id }}">
-                                        <img src="{{ asset('uploads/Service/thumb/' . $service->img) }}" class="card-img-top"
-                                            alt="...">
+                                        <img src="{{ asset('uploads/Service/thumb/' . $service->img) }}"
+                                            class="card-img-top" alt="...">
                                     </div>
                                 </div>
                             @endif
@@ -143,6 +143,8 @@
                         this.removeFile(this.files[0]);
                     }
                     $('button[type=submit]').prop('disabled', true)
+                    $(".loading-container").addClass("active")
+
 
                 });
             },
@@ -156,9 +158,9 @@
             },
             success: function(file, response) {
                 $('button[type=submit]').prop('disabled', false)
-
+                $(".loading-container").removeClass("active")
                 $("#serviceimage").val(response.Image_id);
-                //console.log(response)
+                
             }
         });
 
@@ -168,6 +170,8 @@
             event.preventDefault();
             var element = $(this)
             $('button[type=submit]').prop('disabled', true)
+            $(".loading-container").addClass("active")
+
             $.ajax({
                 url: '{{ route('Update-Service', $service->id) }}',
                 type: 'post',
@@ -175,6 +179,8 @@
                 dataType: 'json',
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $(".loading-container").removeClass("active")
+
                     if (response['status'] == true) {
                         $('.error').removeClass('invalid-feedback').html('')
                         $('input,select,textarea').removeClass('is-invalid')
@@ -204,6 +210,8 @@
         $('#title').change(function() {
             var element = $(this).val();
             $('button[type=submit]').prop('disabled', true)
+            $(".loading-container").addClass("active")
+
             $.ajax({
                 url: '{{ route('GetSlug') }}',
                 type: 'get',
@@ -213,6 +221,8 @@
                 dataType: 'json',
                 success: function(respose) {
                     $('button[type=submit]').prop('disabled', false)
+                    $(".loading-container").removeClass("active")
+
                     $('#slug').val(respose['slug']);
                 }
             })

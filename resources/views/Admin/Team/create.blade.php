@@ -37,7 +37,7 @@
                                                 <p class="error"></p>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-12">
                                             <div class="mb-3">
                                                 <label for="designation">Designation</label>
@@ -49,85 +49,85 @@
                                     </div>
                                 </div>
                             </div>
-                        
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <input type="hidden" id="teamimage" name="teamimage">
-                                <h2 class="h4 mb-3">Media</h2>
-                                <div id="image" class="dropzone dz-clickable">
-                                    <div class="dz-message needsclick">
-                                        <br>Drop files here or click to upload.<br><br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h2 class="h4 mb-3">Social Media Links</h2>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label for="price">Facebook</label>
-                                            <input type="text" name="facebook" id="facebook" class="form-control"
-                                                placeholder="facebook">
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label for="price">Youtube</label>
-                                            <input type="text" name="youtube" id="youtube" class="form-control"
-                                                placeholder="youtube">
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label for="price">Instagram</label>
-                                            <input type="text" name="instagram" id="instagram" class="form-control"
-                                                placeholder="instagram">
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label for="price">X-crop</label>
-                                            <input type="text" name="X" id="X" class="form-control"
-                                                placeholder="X-crop">
-                                            <p class="error"></p>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <input type="hidden" id="teamimage" name="teamimage">
+                                    <h2 class="h4 mb-3">Media</h2>
+                                    <div id="image" class="dropzone dz-clickable">
+                                        <div class="dz-message needsclick">
+                                            <br>Drop files here or click to upload.<br><br>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h2 class="h4 mb-3">Social Media Links</h2>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label for="price">Facebook</label>
+                                                <input type="text" name="facebook" id="facebook" class="form-control"
+                                                    placeholder="facebook">
+                                                <p class="error"></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label for="price">Youtube</label>
+                                                <input type="text" name="youtube" id="youtube" class="form-control"
+                                                    placeholder="youtube">
+                                                <p class="error"></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label for="price">Instagram</label>
+                                                <input type="text" name="instagram" id="instagram" class="form-control"
+                                                    placeholder="instagram">
+                                                <p class="error"></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label for="price">X-crop</label>
+                                                <input type="text" name="X" id="X" class="form-control"
+                                                    placeholder="X-crop">
+                                                <p class="error"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h2 class="h4 mb-3">Member status</h2>
+                                    <div class="mb-3">
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="1">Active</option>
+                                            <option value="0">Block</option>
+                                        </select>
+                                        <p class="error"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h2 class="h4 mb-3">Member status</h2>
-                                <div class="mb-3">
-                                    <select name="status" id="status" class="form-control">
-                                        <option value="1">Active</option>
-                                        <option value="0">Block</option>
-                                    </select>
-                                    <p class="error"></p>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="pb-5 pt-3">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                        <a href="{{ route('Admin-team') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                     </div>
                 </div>
-                <div class="pb-5 pt-3">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                    <a href="{{ route('Admin-team') }}" class="btn btn-outline-dark ml-3">Cancel</a>
-                </div>
-    </div>
-    </form>
-    <!-- /.card -->
-    </section>
-    <!-- /.content -->
+            </form>
+            <!-- /.card -->
+        </section>
+        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 @endsection
@@ -167,6 +167,8 @@
             event.preventDefault();
             var element = $(this)
             $('button[type=submit]').prop('disabled', true)
+            $(".loading-container").addClass("active")
+
             $.ajax({
                 url: '{{ route('Store-member') }}',
                 type: 'post',
@@ -174,6 +176,7 @@
                 dataType: 'json',
                 success: function(response) {
                     $('button[type=submit]').prop('disabled', false)
+                    $(".loading-container").removeClass("active")
 
                     if (response['status'] == true) {
                         $('.error').removeClass('invalid-feedback').html('')
@@ -202,6 +205,8 @@
         $('#name').change(function() {
             var element = $(this).val();
             $('button[type=submit]').prop('disabled', true)
+            $(".loading-container").addClass("active")
+
             $.ajax({
                 url: '{{ route('GetSlug') }}',
                 type: 'get',
@@ -211,6 +216,8 @@
                 dataType: 'json',
                 success: function(respose) {
                     $('button[type=submit]').prop('disabled', false)
+                    $(".loading-container").removeClass("active")
+
                     $('#slug').val(respose['slug']);
                 }
             })

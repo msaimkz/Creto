@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $brands = brand::all();
-        return view('Admin.product.create', compact('categories', 'brands'));
+        return view("Admin.product.create", compact('categories', 'brands'));
     }
 
     public function store(Request $request)
@@ -43,6 +43,15 @@ class ProductController extends Controller
             'qty' => 'required|numeric',
             'status' => 'required',
         ]);
+
+        $length = is_array($request->img_array) ? count($request->img_array) : 0;
+        if ($length > 4) {
+            return response()->json([
+                'status' => false,
+                'error' => true,
+                'errorMsg' => "Only 4 Images Allowed"
+            ]);
+        }
 
         if ($validator->passes()) {
             $product  = new product();
@@ -97,7 +106,7 @@ class ProductController extends Controller
 
                     //small
                     $dpath = public_path() . '/uploads/product/small/' . $ImageName;
-                    $image->cover(300,300);
+                    $image->cover(300, 300);
                     $image->save($dpath);
                 }
             }

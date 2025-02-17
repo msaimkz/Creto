@@ -192,6 +192,8 @@ $(document).ready(function() {
 });
 $('#StatusForm').submit(function(event) {
     event.preventDefault();
+    $(".loading-container").addClass("active")
+
     if (confirm("Are you want to Sure Change Order Status")) {
         $.ajax({
             url: '{{ route("Change-Status",$order->id) }}',
@@ -199,7 +201,7 @@ $('#StatusForm').submit(function(event) {
             data: $(this).serializeArray(),
             dataType: 'json',
             success: function(response) {
-
+                $(".loading-container").removeClass("active")
                 window.location.href = "{{ route('order-detail',$order->id) }}"
 
             }
@@ -210,6 +212,8 @@ $('#StatusForm').submit(function(event) {
 })
 $('#InvoiceEmailSendForm').submit(function(event) {
     event.preventDefault();
+    $(".loading-container").addClass("active")
+
     if (confirm("Are you want to Sure Send Order Email")) {
         $.ajax({
             url: '{{ route("Send-Invioce-Email",$order->id) }}',
@@ -217,6 +221,7 @@ $('#InvoiceEmailSendForm').submit(function(event) {
             data: $(this).serializeArray(),
             dataType: 'json',
             success: function(response) {
+                $(".loading-container").removeClass("active")
 
                 window.location.href = "{{ route('order-detail',$order->id) }}"
 

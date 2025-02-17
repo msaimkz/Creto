@@ -153,6 +153,8 @@ $('#DiscountForm').submit(function(event) {
     event.preventDefault();
     var element = $(this)
     $('button[type=submit]').prop('disabled', true)
+    $(".loading-container").addClass("active")
+
     $.ajax({
         url: '{{route("Store-Dicount-Coupon")}}',
         type: 'post',
@@ -160,6 +162,8 @@ $('#DiscountForm').submit(function(event) {
         dataType: 'json',
         success: function(response) {
             $('button[type=submit]').prop('disabled', false)
+            $(".loading-container").removeClass("active")
+
             if (response['status'] == true) {
 
 
