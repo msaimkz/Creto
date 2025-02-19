@@ -220,6 +220,8 @@
     <script src="{{ asset('asset/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('asset/admin/js/adminlte.min.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('asset/admin/js/demo.js') }}"></script>
     <script type="text/javascript">

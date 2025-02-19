@@ -24,8 +24,8 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
-            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:news',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s]+$/',
+            'slug' => 'required|min:3|max:200|unique:news',
             'writer'=>'required|min:3|min:30|regex:/^[a-zA-Z\s]+$/',
             'description' => 'required|min:10',
             'short_description'=> 'required|min:7|max:150',
@@ -126,8 +126,8 @@ class NewsController extends Controller
              ]);
         } 
         $validator = Validator::make($request->all(),[
-            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
-            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:news,slug,'.$news->id.',id',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s]+$/',
+            'slug' => 'required|min:3|max:200|unique:news,slug,'.$news->id.',id',
             'writer'=>'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
             'description' => 'required|min:10',
             'short_description'=> 'required|min:7|max:150',
@@ -196,14 +196,13 @@ class NewsController extends Controller
          }
     }
 
-    public function destroy(Request $request, string $id)
+    public function destroy( string $id)
     {
         $news = news::find($id); 
         if(empty($news)){
-            $request->session()->flash('error','News not Found');
             return response()->json([
                 'status' => false,
-                'NotFound' => true,
+                'error' => true,
                 'msg' => 'News Not Found'
              ]);
         } 
@@ -213,9 +212,9 @@ class NewsController extends Controller
 
         $news->delete();
 
-        $request->session()->flash('success','News will be Deleted Successfully');
         return response()->json([
             'status' => true,
+            'id' => $id,
             'msg' => 'News will be Deleted Successfully',
             ]);
     }

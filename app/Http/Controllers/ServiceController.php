@@ -34,8 +34,8 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
-            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:services',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s]+$/',
+            'slug' => 'required|min:3|max:200|unique:services',
             'description' => 'required|min:10',
             'is_Home' => 'required|in:Yes,No',
             'status' => 'required',
@@ -129,8 +129,8 @@ class ServiceController extends Controller
             ]);
         }
         $validator = Validator::make($request->all(), [
-            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
-            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:services,slug,' . $service->id . ',id',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s]+$/',
+            'slug' => 'required|min:3|max:200|unique:services,slug,' . $service->id . ',id',
             'description' => 'required|min:10',
             'is_Home' => 'required|in:Yes,No',
             'status' => 'required',
@@ -191,14 +191,13 @@ class ServiceController extends Controller
         }
     }
 
-    public function destroy(Request $request, string $id)
+    public function destroy(string $id)
     {
         $service = Service::find($id);
         if (empty($service)) {
-            $request->session()->flash('error', 'Service not Found');
             return response()->json([
                 'status' => false,
-                'NotFound' => true,
+                'error' => true,
                 'msg' => 'Service Not Found'
             ]);
         }
@@ -207,9 +206,9 @@ class ServiceController extends Controller
 
         $service->delete();
 
-        $request->session()->flash('success', 'Service will be Deleted Successfully');
         return response()->json([
             'status' => true,
+            'id' => $id,
             'msg' => 'Service will be Deleted Successfully',
         ]);
     }

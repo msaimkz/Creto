@@ -220,11 +220,11 @@
                                     <h2 class="h4 mb-3">Featured product</h2>
                                     <div class="mb-3">
                                         <select name="is_featured" id="is_featured" class="form-control">
-                                            <option value="No"
-                                                {{ $product->is_featured == 'No' ? 'selected' : '' }}>No
+                                            <option value="No" {{ $product->is_featured == 'No' ? 'selected' : '' }}>
+                                                No
                                             </option>
-                                            <option value="Yes"
-                                                {{ $product->is_featured == 'Yes' ? 'selected' : '' }}>Yes
+                                            <option value="Yes" {{ $product->is_featured == 'Yes' ? 'selected' : '' }}>
+                                                Yes
                                             </option>
                                         </select>
                                         <p class="error"></p>
@@ -293,7 +293,7 @@
         Dropzone.autoDiscover = false;
         const dropzone = $("#image").dropzone({
             url: "{{ route('Update-product-image') }}",
-            maxFiles: 10,
+            maxFiles: 4,
             paramName: 'image',
             params: {
                 'product_id': '{{ $product->id }}'
@@ -330,6 +330,24 @@
                     $(".loading-container").removeClass("active")
 
                 }
+            },
+            maxfilesexceeded: function(file) {
+                this.removeFile(file)
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "error",
+                    title: "You can only upload up to 4 images"
+                });
             }
         });
 
@@ -379,6 +397,23 @@
                         if (response['NotFound'] == true) {
                             window.location.href = '{{ route('product') }}'
 
+                        }
+                        if (response['error'] == true) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response["errorMsg"]
+                            });
                         }
                         var error = response['errors']
                         $('.error').removeClass('invalid-feedback').html('')

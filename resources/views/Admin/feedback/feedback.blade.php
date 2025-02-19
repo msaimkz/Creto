@@ -49,20 +49,23 @@
                             </thead>
                             <tbody>
                                 @if (!empty($feedbacks))
+                                    @php
+                                        $count = 1;
+                                    @endphp
                                     @foreach ($feedbacks as $feedback)
-                                        <tr>
+                                        <tr id="feedback-row-{{ $feedback->id }}">
                                             <td>
-                                                {{ $feedback->id }}
+                                                {{ $count }}
                                             </td>
                                             <td>{{ $feedback->name }}</td>
                                             <td>{{ $feedback->email }}</td>
                                             <td>
                                                 @if ($feedback->status == 0)
-                                                    <a href="javascript:void(0)"
+                                                    <a id="status-btn-{{ $feedback->id }}" href="javascript:void(0)"
                                                         onclick="ChangeStatus('{{ $feedback->id }}')"
                                                         class="btn btn-success">Approve</a>
                                                 @else
-                                                    <a href="javascript:void(0)"
+                                                    <a id="status-btn-{{ $feedback->id }}" href="javascript:void(0)"
                                                         onclick="ChangeStatus('{{ $feedback->id }}')"
                                                         class="btn btn-danger">Decline</a>
                                                 @endif
@@ -91,6 +94,9 @@
                                                 </a>
                                             </td>
                                         </tr>
+                                        @php
+                                            $count++;
+                                        @endphp
                                     @endforeach
                                 @endif
 
@@ -123,12 +129,40 @@
                     dataType: 'json',
                     success: function(response) {
                         $(".loading-container").removeClass("active")
-
-                        if (response['status']) {
-                            window.location.href = '{{ route('feedback') }}'
+                        if (response['status'] == true) {
+                            $(`#feedback-row-${response['id']}`).remove()
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response["msg"]
+                            });
 
                         } else {
-                            window.location.href = '{{ route('feedback') }}'
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response["msg"]
+                            });
                         }
                     }
                 })
@@ -150,12 +184,47 @@
                     dataType: 'json',
                     success: function(response) {
                         $(".loading-container").removeClass("active")
+                        if (response['status'] == true) {
+                            if (response['feedbackStatus'] == 1) {
+                                $(`#status-btn-${response['id']}`).removeClass("btn-success").addClass("btn-danger").html(
+                                    "Decline")
+                            } else {
+                                $(`#status-btn-${response['id']}`).removeClass("btn-danger").addClass("btn-success").html(
+                                    "Approve")
 
-                        if (response['status']) {
-                            window.location.href = '{{ route('feedback') }}'
+                            }
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: response["msg"]
+                            });
 
                         } else {
-                            window.location.href = '{{ route('feedback') }}'
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response["msg"]
+                            });
                         }
                     }
                 })

@@ -87,7 +87,7 @@ class RatingController extends Controller
 
 
 
-    public function ChangeStatus(Request $request, string $id)
+    public function ChangeStatus(string $id)
     {
         $rating = Rating::find($id);
 
@@ -95,10 +95,10 @@ class RatingController extends Controller
 
             $error = "Ratng Not Found";
 
-            $request->session()->flash('error', $error);
 
             return response()->json([
                 'status' => false,
+                'error' => true,
                 'msg' => $error,
             ]);
         }
@@ -118,18 +118,19 @@ class RatingController extends Controller
             $message = "Rating Status Change Successfully";
         }
 
-        $request->session()->flash('success', $message);
 
 
 
         return response()->json([
             'status' => $status,
+            'id' => $id,
+            'ratingStatus' => $rating->status,
             'msg' => $message
         ]);
     }
 
 
-    public function destroy(Request $request, string $id)
+    public function destroy(string $id)
     {
         $rating = Rating::find($id);
 
@@ -137,10 +138,10 @@ class RatingController extends Controller
 
             $error = "Rating Not Found";
 
-            $request->session()->flash('error', $error);
 
             return response()->json([
                 'status' => false,
+                'error' => true,
                 'msg' => $error,
             ]);
         }
@@ -152,12 +153,12 @@ class RatingController extends Controller
         $status = true;
         $message = "Rating Delete Successfully";
 
-        $request->session()->flash('success', $message);
 
 
 
         return response()->json([
             'status' => $status,
+            'id' => $id,
             'msg' => $message
         ]);
     }

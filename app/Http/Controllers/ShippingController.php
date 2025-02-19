@@ -116,21 +116,23 @@ class ShippingController extends Controller
     }
 
     
-    public function destroy(string $id , Request $request)
+    public function destroy(string $id)
     {
         $shipping = ShippingCharge::find($id);
         if(empty($shipping)){
-            $request->session()->flash('error','Shipping Not Found  ');
            return response()->json([
-            'status' => false
+            'status' => false,
+            'error' => true,
+            'msg' => "Shipping Charge Not Found"
            ]);
         }
 
         $shipping->delete();
 
-        $request->session()->flash('success','Shipping Deleted Succesfully  ');
         return response()->json([
-         'status' => true
+         'status' => true,
+         'id' => $id,
+         'msg' => "Shipping Charge Deleted Successfully"
         ]);
     }
 }

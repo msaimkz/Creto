@@ -72,7 +72,7 @@ class FeedbackController extends Controller
     }
 
 
-    public function ChangeStatus(Request $request, string $id)
+    public function ChangeStatus(string $id)
     {
         $feedback = Feedback::find($id);
 
@@ -80,10 +80,10 @@ class FeedbackController extends Controller
 
             $error = "Feedback Not Found";
 
-            $request->session()->flash('error', $error);
 
             return response()->json([
                 'status' => false,
+                'error' => true,
                 'msg' => $error,
             ]);
         }
@@ -103,18 +103,19 @@ class FeedbackController extends Controller
             $message = "Feedback Status Change Successfully";
         }
 
-        $request->session()->flash('success', $message);
 
 
 
         return response()->json([
             'status' => $status,
+            'id' => $feedback->id,
+            'feedbackStatus' => $feedback->status,
             'msg' => $message
         ]);
     }
 
 
-    public function destroy(Request $request, string $id)
+    public function destroy(string $id)
     {
 
         $feedback = Feedback::find($id);
@@ -123,10 +124,10 @@ class FeedbackController extends Controller
 
             $error = "Feedback Not Found";
 
-            $request->session()->flash('error', $error);
 
             return response()->json([
                 'status' => false,
+                'error' => true,
                 'msg' => $error,
             ]);
         }
@@ -138,12 +139,11 @@ class FeedbackController extends Controller
         $status = true;
         $message = "Feedback Delete Successfully";
 
-        $request->session()->flash('success', $message);
-
 
 
         return response()->json([
             'status' => $status,
+            'id' => $id,
             'msg' => $message
         ]);
     }

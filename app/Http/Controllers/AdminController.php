@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DeleteUserNotificationMail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\product;
@@ -16,6 +17,7 @@ use App\Models\tempimage;
 use App\Models\Wishlist;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -24,7 +26,7 @@ class AdminController extends Controller
     {
 
         $orders = Order::where('delivery_status', '!=', "cancelled")->count();
-        $products = product::where('status',1)->count();
+        $products = product::where('status', 1)->count();
         $users = User::where('role', 0)->count();
 
         // Total Revenue 
@@ -67,8 +69,13 @@ class AdminController extends Controller
 
 
         //  Get Categories
-        
-        $categories = Category::where('status',1)->get();
+
+        $categories = Category::where('status', 1)
+            ->whereIn('id', function ($query) {
+                $query->select('category_id')->from('products');
+            })
+            ->get();
+
 
         // Delete Temp images here
 
@@ -142,7 +149,7 @@ class AdminController extends Controller
         $products = product::with('image');
         if (!empty($request->keyword)) {
             $products->where('title', 'like', '%' . $request->keyword . '%');
-            $products->orWhere('sku', 'like', '%' . $request->keyword . '%');    
+            $products->orWhere('sku', 'like', '%' . $request->keyword . '%');
         }
         $products = $products->paginate(8);
         return view("Admin.product.product", compact('products'));
@@ -199,12 +206,10 @@ class AdminController extends Controller
         if (!empty($request->keyword)) {
             $users = $users->where('users.name', 'like', '%' . $request->keyword . '%');
             $users = $users->orWhere('users.email', 'like', '%' . $request->keyword . '%');
-
-
         }
 
 
-        
+
 
         $users = $users->paginate(8);
 
@@ -226,38 +231,43 @@ class AdminController extends Controller
         return view("Admin.news.news", compact('News'));
     }
 
-    public function DeleteUser(Request $request, $id)
+    public function DeleteUser($id)
 
     {
         $user = User::where('role', 0)->where('id', $id)->first();
         if (empty($user)) {
 
-            $request->session()->flash('error', 'User Not Found');
 
             return response()->json([
                 'status' => true,
+                'error' => true,
                 'msg' => 'User Not Found'
             ]);
         }
 
+        Mail::to($user->email)->send(new DeleteUserNotificationMail([
+            'name' => $user->name,
+        ]));
+        
         $user->delete();
 
-        $request->session()->flash('success', 'User Deleted Successfully');
 
         return response()->json([
             'status' => true,
+            'id' => $id,
             'msg' => 'User Deleted Successfully'
         ]);
     }
 
 
-    public function wishlist(Request $request){
+    public function wishlist(Request $request)
+    {
 
 
         $wishlists = Wishlist::latest('wishlists.created_at')
-        ->select('wishlists.*', 'products.title', 'users.name','users.email')
-        ->leftJoin('products', 'products.id', '=', 'wishlists.product_id')
-        ->leftJoin('users', 'users.id', '=', 'wishlists.user_id');
+            ->select('wishlists.*', 'products.title', 'users.name', 'users.email')
+            ->leftJoin('products', 'products.id', '=', 'wishlists.product_id')
+            ->leftJoin('users', 'users.id', '=', 'wishlists.user_id');
 
 
         if (!empty($request->keyword)) {
@@ -265,78 +275,77 @@ class AdminController extends Controller
             $wishlists->orWhere('users.email', 'like', '%' . $request->keyword . '%');
             $wishlists->orWhere('products.title', 'like', '%' . $request->keyword . '%');
         }
-        
+
 
         $wishlists = $wishlists->paginate(8);
 
-       return view('Admin.wishlist.wishlist',compact('wishlists'));
-
+        return view('Admin.wishlist.wishlist', compact('wishlists'));
     }
 
-    public function contact(Request $request){
+    public function contact(Request $request)
+    {
         $contacts = Contact::latest('contacts.created_at');
 
         if (!empty($request->keyword)) {
             $contacts->where('name', 'like', '%' . $request->keyword . '%');
             $contacts->orWhere('email', 'like', '%' . $request->keyword . '%');
-           
         }
 
 
         $contacts = $contacts->paginate(8);
 
-        return view('Admin.contact.contact',compact('contacts'));
+        return view('Admin.contact.contact', compact('contacts'));
     }
 
-    
-    public function contactDetail(Request $request , $id){
-  
-        $contact = Contact::find($id);
- 
 
-        if(empty($contact)){
+    public function contactDetail(Request $request, $id)
+    {
+
+        $contact = Contact::find($id);
+
+
+        if (empty($contact)) {
 
             $error = "Contact Email Not Found";
-            $request->session()->flash('error',$error);
+            $request->session()->flash('error', $error);
             return redirect()->route('Admin-contact');
         }
 
-        return view('Admin.contact.contact-detail',compact('contact'));
+        return view('Admin.contact.contact-detail', compact('contact'));
     }
 
-    public function deleteContact(Request $request,$id){
-        
-        $contact = Contact::find($id);
- 
+    public function deleteContact($id)
+    {
 
-        if(empty($contact)){
+        $contact = Contact::find($id);
+
+
+        if (empty($contact)) {
 
             $error = "Contact Email Not Found";
-    
-            $request->session()->flash('error',$error);
-              
-            return response()->json([
-            'status' => false,
-            'msg' => $error,
-            ]);
-    
-           }
-    
-           $contact->delete();
-    
-    
-    
-           $status = true;
-            $message = "Contact Email Delete Successfully";
-    
-           $request->session()->flash('success',$message);
-    
-    
-    
-         return response()->json([
-            'status' => $status,
-            'msg' => $message
-         ]);
 
+
+            return response()->json([
+                'status' => false,
+                'error' => true,
+                'msg' => $error,
+            ]);
+        }
+
+        $contact->delete();
+
+
+
+        $status = true;
+        $message = "Contact Email Delete Successfully";
+
+
+
+
+        return response()->json([
+            'status' => $status,
+            'id' => $id,
+            'msg' => $message
+        ]);
     }
 }

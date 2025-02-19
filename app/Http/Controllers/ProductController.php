@@ -29,8 +29,8 @@ class ProductController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
-            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:products',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s]+$/',
+            'slug' => 'required|min:3|max:200|unique:products',
             'description' => 'required|',
             'shipping' => 'required',
             'price' => 'required|numeric',
@@ -49,7 +49,7 @@ class ProductController extends Controller
             return response()->json([
                 'status' => false,
                 'error' => true,
-                'errorMsg' => "Only 4 Images Allowed"
+                'errorMsg' => "You can only upload up to 4 images"
             ]);
         }
 
@@ -170,8 +170,8 @@ class ProductController extends Controller
             ]);
         }
         $validator = Validator::make($request->all(), [
-            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
-            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:products,slug,' . $product->id . ',id',
+            'title' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s]+$/',
+            'slug' => 'required|min:3|max:200|unique:products,slug,' . $product->id . ',id',
             'description' => 'required|',
             'shipping' => 'required',
             'price' => 'required|numeric',
@@ -184,7 +184,14 @@ class ProductController extends Controller
             'qty' => 'required|numeric',
             'status' => 'required',
         ]);
-
+        $length = is_array($request->img_array) ? count($request->img_array) : 0;
+        if ($length > 4) {
+            return response()->json([
+                'status' => false,
+                'error' => true,
+                'errorMsg' => "You can only upload up to 4 images"
+            ]);
+        }
         if ($validator->passes()) {
             $product->title = $request->title;
             $product->slug = $request->slug;
@@ -214,14 +221,14 @@ class ProductController extends Controller
             ]);
         }
     }
-    public function destroy(string $id, Request $request)
+    public function destroy(string $id)
     {
         $product = product::find($id);
         if (empty($product)) {
-            $request->session()->flash('error', 'Product Not Found');
             return response()->json([
                 'status' => false,
-                'NotFound' => true,
+                'error' => true,
+                'msg' => "Product Not Found"
             ]);
         }
 
@@ -235,12 +242,13 @@ class ProductController extends Controller
             productimage::where('product_id', $id)->delete();
         }
         $product->delete();
-        $request->session()->flash('success', 'Product will be Deleted Successfully');
         return response()->json([
             'status' => true,
+            'id' => $id,
             'msg' => 'Product will be Deleted Successfully',
         ]);
     }
+
     public function getProduct(Request $request)
     {
         $tempproduct = [];

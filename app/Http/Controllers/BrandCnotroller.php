@@ -20,7 +20,7 @@ class BrandCnotroller extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
+            'name' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s]+$/',
             'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:brands',
          ]);
  
@@ -73,8 +73,8 @@ class BrandCnotroller extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'name' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/',
-            'slug' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9]+$/|unique:brands,slug,'.$brand->id.',id',
+            'name' => 'required|min:3|max:200|regex:/^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z0-9\s]+$/',
+            'slug' => 'required|min:3|max:200|unique:brands,slug,'.$brand->id.',id',
          ]);
  
          if($validator->passes()){
@@ -98,23 +98,23 @@ class BrandCnotroller extends Controller
              ]);
          }
     }
-    public function destroy(Request $request,string $id)
+    public function destroy(string $id)
     {
         $Brand = brand::find($id);
         if(empty($Brand)){   
-            $request->session()->flash('error','Brand Not Found');
         return response()->json([
             'status' => true,
+            'error' => true,
             'msg' => 'Brand Not Found'
         ]);
         }
 
         $Brand->delete();
 
-        $request->session()->flash('success','Brand Deleted Successfully');
 
         return response()->json([
             'status' => true,
+            'id' => $id,
             'msg' => 'Brand Deleted Successfully'
         ]);
     }

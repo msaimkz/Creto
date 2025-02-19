@@ -18,9 +18,8 @@
         <!-- Main content -->
         <section class="content">
             <!-- Default box -->
-            <form method="post" action="{{ route('Admin.profile.update') }}">
+            <form method="post" id="ProfileForm" name="ProfileForm">
                 @csrf
-                @method('patch')
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-8">
@@ -51,9 +50,9 @@
                                                 <label for="name">Name</label>
                                                 <input type="text" name="name" id="name" class="form-control"
                                                     placeholder="Enter Your Name" value="{{ old('name', $user->name) }}"
-                                                    required autofocus autocomplete="name">
-                                                <span class="text-danger mt-2">
-                                                    {{ implode(',', $errors->get('name')) }}
+                                                    autofocus autocomplete="name">
+                                                <span class="error mt-2">
+
                                                 </span>
                                             </div>
                                         </div>
@@ -63,9 +62,9 @@
                                                 <label for="email">Email</label>
                                                 <input type="email" name="email" id="email" class="form-control"
                                                     placeholder="Enter Your Email" value="{{ old('email', $user->email) }}"
-                                                    required autocomplete="username">
-                                                <span class="text-danger mt-2">
-                                                    {{ implode(',', $errors->get('email')) }}
+                                                    autocomplete="username">
+                                                <span class="error mt-2">
+
                                                 </span>
 
 
@@ -78,8 +77,8 @@
                                                 <input type="text" name="mobile" id="mobile" class="form-control"
                                                     placeholder="Enter Your Phone"
                                                     value="{{ old('mobile', $user->mobile) }}">
-                                                <span class="text-danger mt-2">
-                                                    {{ implode(',', $errors->get('mobile')) }}
+                                                <span class="error mt-2">
+
                                                 </span>
                                             </div>
                                         </div>
@@ -133,18 +132,12 @@
                     <p>Once your account is deleted, all of its resources and data will be permanently deleted. Please enter
                         your password to confirm you would like to permanently delete your account.</p>
 
-                    <form method="post" action="{{ route('Admin.profile.destroy') }}">
+                    <form method="post" id="DeleteAccountForm" name="DeleteAccountForm">
                         @csrf
-                        @method('delete')
-
                         <div class="mb-3">
                             <label class="form-label" for="password">Password</label>
                             <input type="password" name="password" id="password" placeholder="Password"
                                 class="form-control">
-
-                            @foreach ($errors->userDeletion->get('password') as $message)
-                                <span class="text-danger">{{ $message }}</span><br>
-                            @endforeach
                         </div>
 
                         <div class="d-flex delete-button-container">
@@ -172,6 +165,8 @@
                     if (this.files.length > 1) {
                         this.removeFile(this.files[0]);
                     }
+                    $(".loading-container").addClass("active")
+
                 });
             },
             url: "{{ route('Temp-image') }}",
@@ -185,8 +180,121 @@
             success: function(file, response) {
                 $("#profileImg").val(response.Image_id);
                 $("#profile-img-box").attr("src", response.Image_path);
+                $(".loading-container").removeClass("active")
+
 
             }
         });
+        $('#ProfileForm').submit(function(event) {
+            event.preventDefault();
+            var element = $(this)
+            $('button[type=submit]').prop('disabled', true)
+            $(".loading-container").addClass("active")
+
+            $.ajax({
+                url: "{{ route('Admin.profile.update') }}",
+                type: 'patch',
+                data: element.serializeArray(),
+                dataType: 'json',
+                success: function(response) {
+                    $('button[type=submit]').prop('disabled', false)
+                    $(".loading-container").removeClass("active")
+
+                    if (response['status'] == true) {
+                        $('.error').removeClass('invalid-feedback').html('')
+                        $('input').removeClass('is-invalid')
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response["msg"]
+                        });
+                    } else {
+
+                        var error = response['errors']
+                        $('.error').removeClass('invalid-feedback').html('')
+                        $('input').removeClass('is-invalid')
+                        console.log(error)
+                        $.each(error, function(key, value) {
+                            $(`#${key}`).addClass('is-invalid').siblings('span').addClass(
+                                    'invalid-feedback')
+                                .html(value)
+                        })
+
+                    }
+                },
+                error: function(JQXHR, exception) {
+                    console.log('Something Error');
+                }
+            })
+
+        })
+        $('#DeleteAccountForm').submit(function(event) {
+            event.preventDefault();
+            var element = $(this)
+            $('button[type=submit]').prop('disabled', true)
+            $(".loading-container").addClass("active")
+
+            $.ajax({
+                url: "{{ route('Admin.profile.destroy') }}",
+                type: 'delete',
+                data: element.serializeArray(),
+                dataType: 'json',
+                success: function(response) {
+                    $('button[type=submit]').prop('disabled', false)
+                    $(".loading-container").removeClass("active")
+
+                    if (response['status'] == true) {
+                        $('input').removeClass('is-invalid')
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: response["msg"]
+                        });
+                        window.location.hred = "{{ route('index') }}"
+                    } else {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: response['errors']['password']
+                        });
+                    }
+                },
+                error: function(JQXHR, exception) {
+                    console.log('Something Error');
+
+                }
+            })
+
+        })
     </script>
 @endsection

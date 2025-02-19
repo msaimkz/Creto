@@ -291,9 +291,23 @@
 
                 }
             },
-            maxfilesexceeded: function(file){
+            maxfilesexceeded: function(file) {
                 this.removeFile(file)
-                alert("Only Four Images Allowed")
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "error",
+                    title: "You can only upload up to 4 images"
+                });
             }
 
         });
@@ -325,6 +339,23 @@
                         $('input,select,textarea').removeClass('is-invalid')
                         window.location.href = '{{ route('product') }}'
                     } else {
+                        if (response['error'] == true) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: response["errorMsg"]
+                            });
+                        }
                         var error = response['errors']
                         $('.error').removeClass('invalid-feedback').html('')
                         $('input,select,textarea').removeClass('is-invalid')

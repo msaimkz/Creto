@@ -165,23 +165,26 @@ class DiscountCoupon extends Controller
     }
 
 
-    public function destroy(string $id, Request $request)
+    public function destroy(string $id)
     {
 
         $discount = Coupon::find($id);
 
         if (empty($discount)) {
-            $request->session()->flash('error', 'Dicount Coupon Not Found');
-            return redirect()->route('discount');
+            return response()->json([
+                'status' => true,
+                'error' => true,
+                'msg' => "Discount Coupon Not Found",
+            ]);
         }
 
         $discount->delete();
 
 
         $message = 'Discount Coupon Deleted succesfully';
-        $request->session()->flash('success', $message);
         return response()->json([
             'status' => true,
+            'id' => $id,
             'msg' => $message,
         ]);
     }

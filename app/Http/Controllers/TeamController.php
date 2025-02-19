@@ -216,15 +216,14 @@ class TeamController extends Controller
          }
     
     }
-    public function destroy(Request $request, string $id)
+    public function destroy( string $id)
     {
         $member = Team::find($id); 
         if(empty($member)){
-            $request->session()->flash('error','Member not Found');
             return response()->json([
                 'status' => false,
-                'NotFound' => true,
-                'msg' => 'Member Not Found'
+                'error' => true,
+                'msg' => 'Team Member Not Found'
              ]);
         } 
         File::delete(public_path('uploads/team/thumb/'.$member->img));
@@ -232,9 +231,9 @@ class TeamController extends Controller
 
         $member->delete();
 
-        $request->session()->flash('success','Member will be Deleted Successfully');
         return response()->json([
             'status' => true,
+            'id' => $id,
             'msg' => 'Member will be Deleted Successfully',
             ]);
     }
