@@ -36,7 +36,6 @@ class WishlistController extends Controller
 
         $message = "<strong>".$product->title."</strong> Add in your Wishlist ";
 
-        $request->session()->flash('success',$message);
         return response()->json([
             'status' => true,
             'msg' => $message,
@@ -44,7 +43,7 @@ class WishlistController extends Controller
         
     }
 
-    public function destroy (Request $request , $id){
+    public function destroy ($id){
 
         $wishlist = Wishlist::find($id);
         $product = product::find($wishlist->product_id);
@@ -59,9 +58,9 @@ class WishlistController extends Controller
         $wishlist->delete();
         $message ="<strong>".$product->title."</strong> Remove Successfully in You Wishlists";
 
-        $request->session()->flash("success",$message);
         return response()->json([
             'status' => true,
+            'id' => $id,
             'msg' => $message 
         ]);
 

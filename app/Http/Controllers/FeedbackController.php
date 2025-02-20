@@ -56,7 +56,6 @@ class FeedbackController extends Controller
             $feedback->save();
 
             $message = 'Your Feedback Send Successfully';
-            $request->session()->flash('success', $message);
 
             return response()->json([
                 'status' => true,

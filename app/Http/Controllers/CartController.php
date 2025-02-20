@@ -49,7 +49,6 @@ class CartController extends Controller
                 $status = true;
                 Cart::update($rowId, $qty);
                 $message = $product->title . ' Quantity Updated Successfully';
-                $request->session()->flash("success", $message);
             }
         } else {
             Cart::add($product->id, $product->title, 1, $product->price, ["productImage" => (!empty($product->image->first())) ? $product->image->first() : '']);
@@ -66,7 +65,6 @@ class CartController extends Controller
     public function CheckCart(Request $request)
     {
         if ($request->qty == 0) {
-            $request->session()->flash("error", 'Requested Quantity (0) is not Possible');
             return response()->json([
                 'status' => false,
                 'msg' => 'Requested Quantity (0) is not Possible'
@@ -75,22 +73,22 @@ class CartController extends Controller
 
         $rowId = $request->rowid;
         $qty = $request->qty;
-        $id = Cart::get($rowId);
-        $product = product::find($id->id);
+        $item = Cart::get($rowId);
+        $product = product::find($item->id);
 
         if ($request->qty <= $product->qty) {
             Cart::update($rowId, $qty);
             $status = true;
             $message = '<strong>' . $product->title . '</strong> Updated Successfully';
-
-            $request->session()->flash("success", $message);
         } else {
             $status = false;
             $message = 'Requested Quantity(' . $qty . ') is not avialable';
-            $request->session()->flash("error", $message);
         }
         return response()->json([
             'status' => $status,
+            'id' => $rowId,
+            'price' => $item->price * $item->qty,
+            'totalPrice' => Cart::subtotal(),
             'msg' => $message
         ]);
     }
@@ -100,21 +98,21 @@ class CartController extends Controller
 
         $rowId = $request->rowid;
         $qty = $request->qty;
-        $id = Cart::get($rowId);
-        $product = product::find($id->id);
+        $item = Cart::get($rowId);
+        $product = product::find($item->id);
         if ($request->qty <= $product->qty) {
             Cart::update($rowId, $qty);
             $status = true;
             $message = '<strong>' . $product->title . '</strong> Updated Successfully';
-
-            $request->session()->flash("success", $message);
         } else {
             $status = false;
             $message = 'Requested Quantity(' . $qty . ') is not avialable';
-            $request->session()->flash("error", $message);
         }
         return response()->json([
             'status' => $status,
+            'id' => $rowId,
+            'price' => $item->price * $item->qty,
+            'totalPrice' => Cart::subtotal(),
             'msg' => $message
         ]);
     }
@@ -126,10 +124,11 @@ class CartController extends Controller
         $message = '<strong>Product</strong> Remove Cart in   Successfully';
 
 
-        $request->session()->flash("success", $message);
 
         return response()->json([
             'status' => $status,
+            'id' => $rowId,
+            'cartCount' => Cart::count(),
             'msg' => $message
         ]);
     }
@@ -318,11 +317,6 @@ class CartController extends Controller
             } else {
                 $discount = $code->discount_amount;
             }
-
-            $discontString = ' <div class="mt-4 discount-code">
-                            <strong>' . session()->get('code')->code . '</strong>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="removeCoupon()">X</a>
-                        </div>';
         }
 
 
@@ -355,7 +349,7 @@ class CartController extends Controller
                     'ShippingCharges' => number_format($shippingCharges, 2),
                     'discount' => number_format($discount, 2),
                     'GrandTotal' => number_format($grandTotal, 2),
-                    'discountString' => $discontString,
+                    'coupon' => session()->get('code')->code,
                 ]);
             } else {
 

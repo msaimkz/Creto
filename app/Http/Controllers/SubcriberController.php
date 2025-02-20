@@ -65,7 +65,6 @@ class SubcriberController extends Controller
 
             $message = 'Your Email Add Succesfully in Subscriber Member';
 
-            $request->session()->flash('success', $message);
 
             return response()->json([
                 'status' => true,

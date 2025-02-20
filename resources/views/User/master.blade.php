@@ -23,17 +23,20 @@
     @yield('css')
 
     <!-- css link  -->
-    <link rel="stylesheet" href="{{asset('asset/user/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('asset/user/style.css') }}">
     <!-- css link  -->
 
     <!-- CSRF Token  -->
-    <meta name="csrf-token" content="{{csrf_token()}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- CSRF Token  -->
 
 </head>
 
 <body>
     <div class="main">
+        <div class="loading-container">
+            <div class="loader"></div>
+        </div>
         <!-- navbar  -->
         <div class="nav-top">
             <div class="dark-icon">
@@ -43,55 +46,57 @@
                 </div>
             </div>
             <div class="nav-top-icon">
-                @if(Auth::check() == true)
-                <div class="nav-top-item">
-                    <a href="{{ route('Wishlist') }}">
-                        <i class="fa-solid fa-heart sec4-dark-icon"></i>
-                    </a>
-                </div>
-                <div class="nav-top-item dropdown">
-                    <a href="" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user sec4-dark-icon"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="{{ route('Order') }}">My Orders</a></li>
-                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">My Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}" id="Logout">
-                                @csrf
-                                <a class="dropdown-item text-danger" :href="route('logout')" onclick="event.preventDefault();
+                @if (Auth::check() == true)
+                    <div class="nav-top-item">
+                        <a href="{{ route('Wishlist') }}">
+                            <i class="fa-solid fa-heart sec4-dark-icon"></i>
+                        </a>
+                    </div>
+                    <div class="nav-top-item dropdown">
+                        <a href="" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-user sec4-dark-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ route('Order') }}">My Orders</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">My Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" id="Logout">
+                                    @csrf
+                                    <a class="dropdown-item text-danger" :href="route('logout')"
+                                        onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                    Logout
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-                <div class="nav-top-item">
-                    <a href="{{route('Cart')}}">
-                        <i class="fa-solid fa-cart-shopping sec4-dark-icon"></i></a>
-                </div>
+                                        Logout
+                                    </a>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav-top-item">
+                        <a href="{{ route('Cart') }}">
+                            <i class="fa-solid fa-cart-shopping sec4-dark-icon"></i></a>
+                    </div>
                 @else
-                <div class="nav-top-item">
-                    <a href="{{route('login')}}">
-                        <span>Sign In</span></a>
-                </div>
+                    <div class="nav-top-item">
+                        <a href="{{ route('login') }}">
+                            <span>Sign In</span></a>
+                    </div>
 
-                <div class="nav-top-item">
-                    <a href="{{route('Cart')}}">
-                        <i class="fa-solid fa-cart-shopping sec4-dark-icon"></i></a>
-                </div>
+                    <div class="nav-top-item">
+                        <a href="{{ route('Cart') }}">
+                            <i class="fa-solid fa-cart-shopping sec4-dark-icon"></i></a>
+                    </div>
                 @endif
             </div>
         </div>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand text-danger" href="{{ route('index') }}">
-                    <img src="{{asset('asset/user/img/Home1/logo1.svg')}}" class="logo-img-one" alt="">
-                    <img src="{{asset('asset/user/img/Home1/logo41.svg')}}" class="logo-img" alt="">
+                    <img src="{{ asset('asset/user/img/Home1/logo1.svg') }}" class="logo-img-one" alt="">
+                    <img src="{{ asset('asset/user/img/Home1/logo41.svg') }}" class="logo-img" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -104,32 +109,33 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active dark-anchor" aria-current="page"
-                                href="{{route('index')}}">Home</a>
+                                href="{{ route('index') }}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active dark-anchor" aria-current="page"
-                                href="{{route('service')}}">Service</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active dark-anchor" aria-current="page" href="{{route('shop')}}">Shop</a>
+                                href="{{ route('service') }}">Service</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active dark-anchor" aria-current="page"
-                                href="{{route('gallery')}}">Gallery</a>
+                                href="{{ route('shop') }}">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active dark-anchor" aria-current="page"
+                                href="{{ route('gallery') }}">Gallery</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle dark-anchor" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle dark-anchor" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Pages
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{route('about')}}">About Us</a></li>
-                                <li><a class="dropdown-item" href="{{route('News')}}">News</a></li>
+                                <li><a class="dropdown-item" href="{{ route('about') }}">About Us</a></li>
+                                <li><a class="dropdown-item" href="{{ route('News') }}">News</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active dark-anchor" aria-current="page"
-                                href="{{route('contact')}}">Contact</a>
+                                href="{{ route('contact') }}">Contact</a>
                         </li>
 
                     </ul>
@@ -164,14 +170,14 @@
                     <h2 class="nav-nigth">Info</h2>
                     <div class="footer-anchor-container">
                         <div class="footer-anchor">
-                            <a href="{{route('index')}}" class="dark-anchor">Home</a>
-                            <a href="{{route('service')}}" class="dark-anchor">Service</a>
-                            <a href="{{route('shop')}}" class="dark-anchor">Shop</a>
-                            <a href="{{route('gallery')}}" class="dark-anchor">Gallery</a>
+                            <a href="{{ route('index') }}" class="dark-anchor">Home</a>
+                            <a href="{{ route('service') }}" class="dark-anchor">Service</a>
+                            <a href="{{ route('shop') }}" class="dark-anchor">Shop</a>
+                            <a href="{{ route('gallery') }}" class="dark-anchor">Gallery</a>
                         </div>
                         <div class="footer-anchor">
-                            <a href="{{route('about')}}" class="dark-anchor">About us</a>
-                            <a href="{{route('News')}}" class="dark-anchor">News</a>
+                            <a href="{{ route('about') }}" class="dark-anchor">About us</a>
+                            <a href="{{ route('News') }}" class="dark-anchor">News</a>
 
 
                         </div>
@@ -189,49 +195,51 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- swiper script link  -->
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('.toggle').click(function() {
-            $('.toggle').toggleClass('active')
-            $('body').toggleClass('nigth')
-            $('.nav-nigth').toggleClass('nav-dark')
-            $('.dark-card').toggleClass('dark-back')
-            $('.gear-button').toggleClass('nigth-button')
-            $('.card-dark').toggleClass('dark')
-            $('.dark-icon').toggleClass('icon')
-            $('.green-card').toggleClass('text')
-            $('.blog-dark').toggleClass('blog-nigth')
-            $('.sec7-dark').toggleClass('sec7-nigth')
-            $('.sec8-dark').toggleClass('sec8-nigth')
-            $('.sec8-nav-nigth').toggleClass('sec8-nav-text')
-            $('.sec4-nav-nigth').toggleClass('sec4-nav-text')
-            $('.card-dark-img').toggleClass('dark-img')
-            $('.dark-filter').toggleClass('nigth-filter')
-            $('.sec4-dark-icon').toggleClass('sec4-nigth-icon')
-            $('.dark-anchor').toggleClass('nigth-anchor')
-            $('.sec10-dark').toggleClass('sec10-nigth')
-            $('.sc10-dark-img').toggleClass('sc10-nigth-img')
-            $('.sec10-dark-text').toggleClass('sec10-nigth-text')
-            $('.dark-shopping').toggleClass('nigth-shopping')
-            $('.dark-close').toggleClass('nigth-close')
-            $('.dark-cursor').toggleClass('nigth-cursor')
-            $('.contact-dark-card').toggleClass('contact-nigth-card')
-            $('.dark-input-service').toggleClass('nigth-input-service')
-            $('.dark-input-service').toggleClass('nigth-input-service')
-            $('.cart-header').toggleClass('nigth-cart-header')
+        $(document).ready(function() {
+            $('.toggle').click(function() {
+                $('.toggle').toggleClass('active')
+                $('body').toggleClass('nigth')
+                $('.nav-nigth').toggleClass('nav-dark')
+                $('.dark-card').toggleClass('dark-back')
+                $('.gear-button').toggleClass('nigth-button')
+                $('.card-dark').toggleClass('dark')
+                $('.dark-icon').toggleClass('icon')
+                $('.green-card').toggleClass('text')
+                $('.blog-dark').toggleClass('blog-nigth')
+                $('.sec7-dark').toggleClass('sec7-nigth')
+                $('.sec8-dark').toggleClass('sec8-nigth')
+                $('.sec8-nav-nigth').toggleClass('sec8-nav-text')
+                $('.sec4-nav-nigth').toggleClass('sec4-nav-text')
+                $('.card-dark-img').toggleClass('dark-img')
+                $('.dark-filter').toggleClass('nigth-filter')
+                $('.sec4-dark-icon').toggleClass('sec4-nigth-icon')
+                $('.dark-anchor').toggleClass('nigth-anchor')
+                $('.sec10-dark').toggleClass('sec10-nigth')
+                $('.sc10-dark-img').toggleClass('sc10-nigth-img')
+                $('.sec10-dark-text').toggleClass('sec10-nigth-text')
+                $('.dark-shopping').toggleClass('nigth-shopping')
+                $('.dark-close').toggleClass('nigth-close')
+                $('.dark-cursor').toggleClass('nigth-cursor')
+                $('.contact-dark-card').toggleClass('contact-nigth-card')
+                $('.dark-input-service').toggleClass('nigth-input-service')
+                $('.dark-input-service').toggleClass('nigth-input-service')
+                $('.cart-header').toggleClass('nigth-cart-header')
 
-            $('.comment-content>p>p').toggleClass('nav-nigth')
+                $('.comment-content>p>p').toggleClass('nav-nigth')
+            })
+
         })
 
-    })
 
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     </script>
 
     @yield('js')

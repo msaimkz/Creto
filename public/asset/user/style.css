@@ -20,6 +20,69 @@ body {
     /* overflow-x: hidden; */
 }
 
+.loading-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffffb0;
+    z-index: 99999;
+}
+
+.loading-container.active {
+    display: flex;
+}
+
+.loader {
+    --s: 20px;
+
+    --_d: calc(0.353*var(--s));
+    width: calc(var(--s) + var(--_d));
+    aspect-ratio: 1;
+    display: grid;
+}
+
+.loader:before,
+.loader:after {
+    content: "";
+    grid-area: 1/1;
+    clip-path: polygon(var(--_d) 0, 100% 0, 100% calc(100% - var(--_d)), calc(100% - var(--_d)) 100%, 0 100%, 0 var(--_d));
+    background:
+        conic-gradient(from -90deg at calc(100% - var(--_d)) var(--_d),
+            #FFD910 135deg, #FFD910 0 270deg, #FFD910 0);
+    animation: l6 2s infinite;
+}
+
+.loader:after {
+    animation-delay: -1s;
+}
+
+@keyframes l6 {
+    0% {
+        transform: translate(0, 0)
+    }
+
+    25% {
+        transform: translate(30px, 0)
+    }
+
+    50% {
+        transform: translate(30px, 30px)
+    }
+
+    75% {
+        transform: translate(0, 30px)
+    }
+
+    100% {
+        transform: translate(0, 0)
+    }
+}
+
 .Not-found {
     font-size: 40px;
     font-family: "Teko", sans-serif;
@@ -55,18 +118,22 @@ body {
     display: flex;
     gap: 20px;
 }
+
 .nav-top-item a {
     text-decoration: none;
 }
+
 .nav-top-item a span {
     font-family: "Roboto Condensed", sans-serif;
     font-size: 16px;
     color: #464649;
     transition: all 0.5s ease;
 }
+
 .nav-top-item a span:hover {
     color: #ffdb1d;
 }
+
 .nav-top-item i {
     color: #858b92;
     cursor: pointer;
@@ -514,12 +581,7 @@ body.nigth .logo-img-one {
     height: 50px;
 }
 
-.fouth-section
-    .fourth-card-container
-    .fourth-card
-    .fourth-content-box
-    button
-    span {
+.fouth-section .fourth-card-container .fourth-card .fourth-content-box button span {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 20px;
@@ -527,11 +589,7 @@ body.nigth .logo-img-one {
     transition: 0.5s;
 }
 
-.fouth-section
-    .fourth-card-container
-    .fourth-card
-    .fourth-content-box
-    button:hover {
+.fouth-section .fourth-card-container .fourth-card .fourth-content-box button:hover {
     background-color: #ffdb1d;
 }
 
@@ -592,19 +650,22 @@ body.nigth .logo-img-one {
     font-family: "Roboto Condensed", sans-serif;
 }
 
-#SubscribeForm{
+#SubscribeForm {
     display: flex;
     gap: 10px;
 }
-#SubscribeForm>div{
+
+#SubscribeForm>div {
     display: flex;
     flex-direction: column;
 }
-#SubscribeForm>div>span{
+
+#SubscribeForm>div>span {
     color: red;
     font-family: "Roboto Condensed", sans-serif;
 
 }
+
 .fifth-section .fifth-content .fifth-email input {
     padding: 10px;
     width: 250px;
@@ -622,7 +683,7 @@ body.nigth .logo-img-one {
     transition: 0.5s;
     width: 120px;
     height: 45px;
-   
+
 }
 
 .fifth-section .fifth-content .fifth-email button span {
@@ -1574,6 +1635,7 @@ body.nigth .contact-dark-card.contact-nigth-card {
 **************************************Home Page Responsive CSS*********************************************
 ***************************************************************************************************/
 @media (min-width: 1024px) {
+
     /* Navbar Responsive */
     body {
         width: 100%;
@@ -1640,7 +1702,7 @@ body.nigth .contact-dark-card.contact-nigth-card {
     .section9 img {
         width: 110px;
     }
-    
+
     #SubscribeForm button {
         margin-top: 25px;
     }
@@ -1672,8 +1734,9 @@ body.nigth .contact-dark-card.contact-nigth-card {
         font-family: "Teko", sans-serif;
         color: #fff;
     }
-    #SubscribeForm{
-       flex-direction: column;
+
+    #SubscribeForm {
+        flex-direction: column;
         gap: 10px;
     }
 
@@ -1722,6 +1785,7 @@ body.nigth .contact-dark-card.contact-nigth-card {
     .fourt-head-section h1 {
         font-size: 28px;
     }
+
     .fouth-section .fourt-head-section .button-container a {
         font-size: 16px;
     }
@@ -1737,6 +1801,7 @@ body.nigth .contact-dark-card.contact-nigth-card {
     .fifth-section .fifth-content {
         background-image: none;
     }
+
     .fifth-section .fifth-content .fifth-email input {
         width: 220px;
     }
@@ -1748,25 +1813,32 @@ body.nigth .contact-dark-card.contact-nigth-card {
     .section9 {
         overflow-x: hidden;
     }
+
     .section9 img {
         width: 100px;
     }
+
     .section10 .sec10-content .sec10-count-box {
         width: 100vw;
         transform: translateX(-50%);
     }
+
     .section10 .sec10-content .sec10-count-box h1 {
         font-size: 40px;
     }
+
     .timer {
         width: 340px;
     }
+
     .timer div {
         width: 50px;
     }
+
     .timer div span {
         font-size: 30px;
     }
+
     .timer div h2 {
         font-size: 16px;
     }
@@ -1774,25 +1846,32 @@ body.nigth .contact-dark-card.contact-nigth-card {
     .border-line {
         border-right: none;
     }
+
     .sec10-imgbox img {
         width: 300px;
     }
+
     .section11 {
         flex-wrap: wrap;
     }
+
     .sec11-card {
         width: 205px;
         height: 150px;
     }
+
     .sec11-card:nth-child(5) {
         display: none;
     }
+
     footer {
         flex-direction: column;
     }
+
     .footer-content {
         width: 90vw;
     }
+
     .footer-content h2:nth-child(3) {
         margin-top: 30px;
     }
@@ -1951,9 +2030,11 @@ body.nigth .contact-dark-card.contact-nigth-card {
     bottom: 60px;
     transform: translatex(-50%);
 }
+
 #FeedBackForm .service-input input {
     width: 500px;
 }
+
 .form button:hover {
     background-color: #ffdb1d;
 }
@@ -1977,6 +2058,7 @@ body.nigth .form textarea {
 **************************************Service Page Responsive CSS*********************************************
 ***************************************************************************************************/
 @media (max-width: 1024px) {
+
     /* Navbar Responsive */
     body {
         width: 100vw;
@@ -1996,6 +2078,7 @@ body.nigth .form textarea {
     .service-input input {
         width: 200px;
     }
+
     #FeedBackForm .service-input input {
         width: 200px;
     }
@@ -2010,10 +2093,12 @@ body.nigth .form textarea {
     .form h1 {
         font-size: 40px;
     }
+
     .service-input {
         flex-direction: column;
         gap: 40px;
     }
+
     .service-input input {
         width: 90vw;
     }
@@ -2022,6 +2107,7 @@ body.nigth .form textarea {
         flex-direction: column;
         gap: 40px;
     }
+
     #FeedBackForm .service-input input {
         width: 90vw;
     }
@@ -2111,6 +2197,7 @@ body.nigth .form textarea {
     margin: 30px 0;
     display: none;
 }
+
 .filter-button-container button {
     width: 75vw;
     padding: 10px 30px;
@@ -2249,9 +2336,11 @@ body.nigth .form textarea {
     color: #464649;
     text-decoration: none;
 }
+
 .shop-left-site.show {
     display: block;
 }
+
 /* shop  left site section css  */
 
 /* shop  Rigth site section css  */
@@ -2581,11 +2670,13 @@ body.nigth .form textarea {
 .text-muted {
     display: none;
 }
+
 .pagination {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
+
 /* shop rigth site section css  */
 
 /**************************************************************************************************'
@@ -2604,20 +2695,25 @@ body.nigth .form textarea {
     .shop-rigth-site {
         width: 100vw;
     }
+
     .product-card-container {
         justify-content: center;
     }
+
     .product-card-container .fourth-card {
         width: 240px;
     }
+
     .product-card-container .fourth-card.fourth-three-card {
         width: 240px;
     }
+
     .pagination {
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
     .filter-button-container {
         display: flex;
         justify-content: center;
@@ -2628,6 +2724,7 @@ body.nigth .form textarea {
     .product-card-container .fourth-card {
         width: 220px;
     }
+
     .product-card-container .fourth-card.fourth-three-card {
         width: 220px;
     }
@@ -2637,9 +2734,11 @@ body.nigth .form textarea {
     .shop-main {
         overflow-x: hidden;
     }
+
     .sub-banner h1 {
         font-size: 30px;
     }
+
     .sub-banner p {
         font-size: 16px;
         width: 300px;
@@ -2648,16 +2747,20 @@ body.nigth .form textarea {
     .sort-section {
         align-items: center;
     }
+
     .sort-section h2 {
         font-size: 16px;
     }
+
     .sort-section .sort-sub div {
         display: none;
     }
+
     .product-card-container .fourth-card {
         width: 320px;
     }
 }
+
 /**************************************************************************************************'
 **************************************Product Page Responsive CSS*********************************************
 ***************************************************************************************************/
@@ -2767,6 +2870,7 @@ body.nigth .form textarea {
     width: 750px;
     height: 350px;
 }
+
 .gallery-main-section .fifth-pic img {
     width: 100%;
     height: 100%;
@@ -2783,19 +2887,24 @@ body.nigth .form textarea {
         flex-direction: row;
         gap: 0px;
     }
+
     .gallery-main-section .cloumn-pic img {
         width: 350px;
     }
+
     .gallery-main-section .fourth-pic {
         width: 100vw;
     }
+
     .gallery-main-section .gallery-pic img {
         object-fit: fill;
     }
+
     .gallery-main-section .cloumn-pic:nth-child(4) {
         flex-direction: column;
         gap: 20px;
     }
+
     .gallery-main-section .fifth-pic {
         width: 92vw;
     }
@@ -2811,6 +2920,7 @@ body.nigth .form textarea {
         width: 300px;
     }
 }
+
 @media screen and (max-width: 550px) {
     .gallery-main-section {
         overflow-x: hidden;
@@ -2820,10 +2930,12 @@ body.nigth .form textarea {
         flex-direction: column;
         gap: 50px;
     }
+
     .gallery-main-section .cloumn-pic img {
         width: 80vw;
     }
 }
+
 /**************************************************************************************************'
 **************************************Gallery Page Responsive CSS*********************************************
 ***************************************************************************************************/
@@ -2988,12 +3100,14 @@ body.nigth .form textarea {
     .contact-second-section img {
         width: 90vw;
     }
+
     .contact-second-section .contact-second-contact-box {
         width: 90vw;
         text-align: center;
         align-items: center;
     }
 }
+
 @media screen and (max-width: 770px) {
     .contact-third-section .contact-card {
         width: 290px;
@@ -3200,9 +3314,11 @@ body.nigth .form textarea {
     .about-second-section h1 {
         font-size: 40px;
     }
+
     .about-second-container {
         flex-direction: column;
     }
+
     .about-second-container .about-banner {
         width: 80vw;
     }
@@ -3210,10 +3326,12 @@ body.nigth .form textarea {
     .about-count-down-section {
         height: 730px;
     }
+
     .count-down-container {
         flex-direction: column;
     }
 }
+
 /**************************************************************************************************'
 **************************************About us Page CSS*********************************************
 ***************************************************************************************************/
@@ -3431,25 +3549,31 @@ body.nigth .nigth-description p {
     .Product-Detail-container {
         flex-direction: column;
     }
+
     .product-detail-image .main-image {
         width: 90vw;
     }
+
     .sub-image-container {
         margin-top: 30px;
         align-items: center;
         justify-content: center;
     }
+
     .comment-input input {
         width: 270px;
     }
 }
+
 @media screen and (max-width: 550px) {
     .product-detail-content h1 {
         font-size: 32px;
     }
+
     .Product-price h2 {
         font-size: 26px;
     }
+
     .product-detail-content p {
         font-size: 16px;
     }
@@ -3470,6 +3594,7 @@ body.nigth .nigth-description p {
         font-size: 28px;
     }
 }
+
 /**************************************************************************************************'
 **************************************Product Detail Page Responsive CSS*********************************************
 ***************************************************************************************************/
@@ -3506,26 +3631,26 @@ body.nigth .nigth-description p {
     border-bottom: 2px solid #000;
 }
 
-.cart-thead > tr {
+.cart-thead>tr {
     padding-inline-start: 40px;
     text-align: center;
 }
 
-.cart-thead > tr > th {
+.cart-thead>tr>th {
     font-size: 23px;
     color: #000;
     font-weight: 600;
     font-family: "Teko", sans-serif;
 }
 
-.cart-tbody > tr > td {
+.cart-tbody>tr>td {
     font-size: 23px;
     color: #000;
     font-weight: 400;
     font-family: "Teko", sans-serif;
 }
 
-tbody > tr > td:nth-child(1) > div > h2 {
+tbody>tr>td:nth-child(1)>div>h2 {
     font-size: 30px;
     margin-left: 10px;
 }
@@ -3549,7 +3674,7 @@ tbody > tr > td:nth-child(1) > div > h2 {
     font-family: "Teko", sans-serif;
 }
 
-.cart-summary > div {
+.cart-summary>div {
     font-size: 25px;
     text-align: center;
     color: #000;
@@ -3597,17 +3722,21 @@ body.nigth .nigth-card .card {
         flex-direction: column;
         align-items: center;
     }
+
     #cart-items {
         width: 100vw;
     }
+
     #cart-price {
         width: 80vw;
     }
 }
+
 @media screen and (max-width: 550px) {
-    tbody > tr > td:nth-child(1) > div > h2 {
+    tbody>tr>td:nth-child(1)>div>h2 {
         font-size: 18px;
     }
+
     .cart-empty {
         font-size: 22px;
     }
@@ -3624,7 +3753,7 @@ body.nigth .nigth-card .card {
 /**************************************************************************************************'
 **************************************Wishlist Page CSS*********************************************
 ***************************************************************************************************/
-.wishlist > h2 {
+.wishlist>h2 {
     font-size: 37px;
     color: #000;
     font-weight: 500;
@@ -3658,6 +3787,7 @@ body.nigth .wishlist {
     .Wishlist-item-title a {
         font-size: 26px;
     }
+
     .Wishlist-item-price {
         font-size: 23px;
     }
@@ -3770,9 +3900,11 @@ body.nigth .card select {
         flex-direction: column;
         align-items: center;
     }
+
     #checkout-col-1 {
         width: 100vw;
     }
+
     #checkout-col-2 {
         width: 80vw;
     }
@@ -3796,28 +3928,29 @@ body.nigth .card select {
     border-bottom: 2px solid #000;
 }
 
-.order-thead > tr {
+.order-thead>tr {
     padding-inline-start: 40px;
 }
 
-.order-thead > tr > th {
+.order-thead>tr>th {
     font-size: 23px;
     color: #000;
     font-weight: 600;
     font-family: "Teko", sans-serif;
 }
 
-.order-tbody > tr > td {
+.order-tbody>tr>td {
     font-size: 23px;
     color: #000;
     font-weight: 400;
     font-family: "Teko", sans-serif;
 }
 
-.order-tbody > tr > td a {
+.order-tbody>tr>td a {
     color: #000;
     text-decoration-line: none;
 }
+
 .order-view {
     font-size: 18px;
     font-weight: 600;
@@ -3843,17 +3976,21 @@ body.nigth .card select {
 body.nigth .order-thead {
     background-color: #23b24c;
 }
+
 @media screen and (max-width: 550px) {
-    .order-thead > tr > th {
+    .order-thead>tr>th {
         font-size: 16px;
     }
+
     .badge {
         font-size: 0.55em;
     }
-    .order-tbody > tr > td {
+
+    .order-tbody>tr>td {
         font-size: 20px;
     }
 }
+
 /**************************************************************************************************'
 **************************************Order Page CSS*********************************************
 ***************************************************************************************************/
@@ -3900,21 +4037,25 @@ body.nigth .order-thead {
 .order-sub-title span {
     font-size: 23px;
 }
+
 .order-button {
     display: flex;
     justify-content: space-between;
     padding: 20px 100px;
 }
+
 .cancel-button {
     display: flex;
     justify-content: flex-end;
     padding: 20px 100px;
 }
+
 .exchange-button-container {
     display: flex;
     justify-content: flex-end;
     padding: 20px 100px;
 }
+
 .download-pdf-button {
     font-size: 18px;
     font-weight: 600;
@@ -3969,6 +4110,7 @@ body.nigth .card-footer ul li {
 body.nigth .nigth-card-header {
     border-bottom: 2px solid #fff;
 }
+
 .download-cancel-button {
     font-size: 18px;
     font-weight: 600;
@@ -4049,10 +4191,12 @@ body.nigth .nigth-card-header {
     font-family: "Roboto Condensed", sans-serif;
     font-size: 18px;
 }
+
 @media screen and (max-width: 550px) {
     .blog-text-container h1 {
         font-size: 25px;
     }
+
     .blog-text-container p {
         width: 80vw !important;
         font-size: 15px;
@@ -4191,14 +4335,17 @@ body.nigth .nigth-card-header {
     color: #fff;
     background-color: transparent;
 }
+
 @media screen and (max-width: 550px) {
     .Thanks-content h1 {
         font-size: 40px;
     }
+
     .Thanks-content h2 {
         font-size: 20px;
     }
 }
+
 /**************************************************************************************************'
 **************************************Thanks Page CSS*********************************************
 ***************************************************************************************************/
@@ -4221,6 +4368,7 @@ body.nigth .nigth-card-header {
     font-weight: bold;
     text-align: center;
 }
+
 .Subscribe-email-container .discount {
     font-family: "Teko", sans-serif;
     font-size: 30px;
@@ -4228,6 +4376,7 @@ body.nigth .nigth-card-header {
     text-align: center;
     color: #000;
 }
+
 .Subscribe-email-container p {
     font-size: 22px;
     text-align: center;
@@ -4241,12 +4390,14 @@ body.nigth .nigth-card-header {
     font-weight: bold;
     text-align: center;
 }
+
 .Subscribe-email-container h3 {
     font-family: "Teko", sans-serif;
     font-size: 27px;
     font-weight: bold;
     text-align: center;
 }
+
 /**************************************************************************************************'
 **************************************Subscribe Mail Page CSS*********************************************
 ***************************************************************************************************/
@@ -4267,11 +4418,13 @@ body.nigth .nigth-card-header {
     font-size: 30px;
     font-weight: bold;
 }
+
 .Contact-email-container span {
     font-size: 18px;
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 300;
 }
+
 /**************************************************************************************************'
 **************************************Contact Mail Page CSS*********************************************
 ***************************************************************************************************/
@@ -4301,21 +4454,25 @@ body.nigth .nigth-card-header {
     transition: all 0.5s;
     text-align: center;
 }
+
 .profile-input {
     font-size: 18px;
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 300;
     padding: 12px;
 }
+
 .profile-label {
     font-size: 20px;
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 600;
 }
+
 .profile-button:hover {
     color: #000;
     background-color: transparent;
 }
+
 .profile-image-container {
     width: 140px;
     height: 140px;
@@ -4324,6 +4481,7 @@ body.nigth .nigth-card-header {
     background-color: #000;
     position: relative;
 }
+
 .profile-image-container img {
     width: 100%;
     height: 100%;
@@ -4344,9 +4502,11 @@ body.nigth .nigth-card-header {
     opacity: 0;
     transition: all ease 0.5s;
 }
+
 .dropzone-imag-upload:hover {
     opacity: 1;
 }
+
 .profile-button-container {
     justify-content: space-between;
 }
@@ -4356,6 +4516,7 @@ body.nigth .nigth-card-header {
     height: 80%;
     object-fit: cover;
 }
+
 /**************************************************************************************************'
 **************************************Profile Page Page CSS*********************************************
 ***************************************************************************************************/
@@ -4385,17 +4546,20 @@ body.nigth .nigth-card-header {
     transition: all 0.5s;
     text-align: center;
 }
+
 .password-input {
     font-size: 18px;
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 300;
     padding: 12px;
 }
+
 .password-label {
     font-size: 20px;
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 600;
 }
+
 .password-button:hover {
     color: #000;
     background-color: transparent;
@@ -4423,15 +4587,18 @@ body.nigth .nigth-card-header {
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 300;
 }
+
 .delete-button-container {
     justify-content: flex-end;
     gap: 10px;
     margin-top: 20px;
 }
+
 .delete-button {
     background-color: red;
     color: #fff;
 }
+
 .delete-button:hover {
     border: 1px solid red;
 }
@@ -4446,29 +4613,32 @@ body.nigth .nigth-card-header {
 **************************************Echange Order Form Page CSS*********************************************
 ***************************************************************************************************/
 
-.Exchange-order-container{
+.Exchange-order-container {
     width: 100%;
     padding: 30px 40px;
 }
-.input-main-container>h2{
+
+.input-main-container>h2 {
     font-family: "Teko", sans-serif;
     font-size: 35px;
     font-weight: bold;
 
 }
-.input-main-container>h3{
+
+.input-main-container>h3 {
     font-family: "Teko", sans-serif;
     font-size: 28px;
     font-weight: bold;
 
 }
-.input-checkbox-container{
+
+.input-checkbox-container {
     display: flex;
     align-items: center;
     gap: 50px;
 }
 
-#orderproducts{
+#orderproducts {
     display: inline-block;
     width: 17px;
     height: 17px;
@@ -4478,46 +4648,46 @@ body.nigth .nigth-card-header {
     position: relative;
     cursor: pointer;
 }
-.input-label{
+
+.input-label {
     font-family: "Teko", sans-serif;
     font-size: 22px;
-   
-    
+
+
 }
 
-.input-product-label{
+.input-product-label {
     font-family: "Teko", sans-serif;
     font-size: 25px;
     font-weight: 500;
-   
-    
+
+
 }
-.input-title{
+
+.input-title {
     font-family: "Teko", sans-serif;
     font-size: 20px;
-    
 
- 
+
+
 }
 
-#input-contain{
+#input-contain {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 
-.input-group-btn{
+.input-group-btn {
     display: flex;
     align-items: center;
 }
-.Product-row{
+
+.Product-row {
     align-items: center;
 }
 
 /**************************************************************************************************'
 **************************************Echange Order Form Page CSS*********************************************
 ***************************************************************************************************/
-
-
-

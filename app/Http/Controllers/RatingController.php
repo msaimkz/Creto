@@ -53,7 +53,6 @@ class RatingController extends Controller
 
             if ($RatingCheck != null) {
                 $error = 'Your Already Comment For This Product';
-                $request->session()->flash('error', $error);
 
                 return response()->json([
                     'status' => true,
@@ -70,7 +69,6 @@ class RatingController extends Controller
             $rating->save();
 
             $message = 'Your Comment Send Successfully';
-            $request->session()->flash('success', $message);
 
             return response()->json([
                 'status' => true,

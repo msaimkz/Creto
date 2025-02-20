@@ -375,7 +375,6 @@ class UserController extends Controller
 
             Mail::to($admin->email)->send(new ContactEmail($maildata));
 
-            $request->session()->flash('success', 'Your Message Send Succesfully');
             return response()->json([
                 'status' => true,
                 'msg' => 'Your Message Send Succesfully',
