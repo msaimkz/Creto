@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Feedback;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -16,8 +17,7 @@ class FeedbackController extends Controller
 
         if (!empty($request->keyword)) {
             $feedbacks->where('name', 'like', '%' . $request->keyword . '%');
-            $feedbacks->orWhere('email', 'like', '%' . $request->keyword . '%');    
-
+            $feedbacks->orWhere('email', 'like', '%' . $request->keyword . '%');
         }
 
         $feedbacks = $feedbacks->paginate(8);
@@ -27,7 +27,7 @@ class FeedbackController extends Controller
 
     public function store(Request $request)
     {
-       
+
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
@@ -40,10 +40,20 @@ class FeedbackController extends Controller
 
             if (Auth::check() == false) {
                 return response()->json([
-                    'isLogin' => false,
+                    'isError' => true,
                     'msg' => 'Submit Feedback to first Sign in',
                 ]);
             }
+
+
+            $ExistUser = User::where('email', $request->email)->first();
+            if ($ExistUser != null) {
+                return response()->json([
+                    'isError' => true,
+                    'msg' => 'Email is Already Exist',
+                ]);
+            }
+
 
 
             $user = Auth::user();
@@ -147,18 +157,19 @@ class FeedbackController extends Controller
         ]);
     }
 
-    public function show(Request $request , $id){
-  
-        $feedback = Feedback::find($id);
- 
+    public function show(Request $request, $id)
+    {
 
-        if(empty($feedback)){
+        $feedback = Feedback::find($id);
+
+
+        if (empty($feedback)) {
 
             $error = "Feedback Not Found";
-            $request->session()->flash('error',$error);
+            $request->session()->flash('error', $error);
             return redirect()->route('feedback');
         }
 
-        return view('Admin.feedback.feedback-detail',compact('feedback'));
+        return view('Admin.feedback.feedback-detail', compact('feedback'));
     }
 }

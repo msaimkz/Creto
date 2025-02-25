@@ -238,7 +238,7 @@
                     success: function(response) {
                         $('button[type=submit]').prop('disabled', false)
                         $(".loading-container").removeClass("active")
-                        if (response.isLogin == false) {
+                        if (response["isError"] == true) {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: "top-end",

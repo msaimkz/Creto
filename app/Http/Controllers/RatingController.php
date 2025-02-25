@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rating;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -33,7 +34,7 @@ class RatingController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/',
-            'email' => 'required|email|unique:ratings,email,'. Auth::id() . ',user_id',
+            'email' => 'required|email',
             'message' => 'required|min:10'
         ]);
 
@@ -43,7 +44,7 @@ class RatingController extends Controller
             if (Auth::check() == false) {
                 return response()->json([
 
-                    'isLogin' => false,
+                    'isError' => true,
                     'msg' => 'Add Reviews to first Sign in',
                 ]);
             }
@@ -59,6 +60,17 @@ class RatingController extends Controller
                     'msg' => $error,
                 ]);
             }
+
+
+
+            $ExistUser = User::where('email', $request->email)->first();
+            if ($ExistUser != null) {
+                return response()->json([
+                    'isError' => true,
+                    'msg' => 'Email is Already Exist',
+                ]);
+            }
+
 
             $rating = new Rating();
             $rating->user_id = $user->id;

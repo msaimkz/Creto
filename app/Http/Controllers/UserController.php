@@ -173,7 +173,7 @@ class UserController extends Controller
 
     public function Product(string $slug)
     {
-        $product = Product::where(['slug' =>  $slug , 'status' => 1 ])->first();
+        $product = Product::where(['slug' =>  $slug, 'status' => 1])->first();
 
         if (empty($product)) {
 
@@ -265,7 +265,6 @@ class UserController extends Controller
             if ($shippinginfo != null) {
 
                 $shippingcharges = $shippinginfo->amount * $total;
-              
             } else {
 
                 $shipping = ShippingCharge::where('country_id', 'rest_of_world')->first();
@@ -348,12 +347,20 @@ class UserController extends Controller
             if (Auth::check() == false) {
                 return response()->json([
 
-                    'isLogin' => false,
+                    'isError' => true,
                     'msg' => 'Send Contact Email to first Sign in',
                 ]);
             }
 
             $user = Auth::user();
+
+            $ExistUser = User::where('email', $request->email)->first();
+            if ($ExistUser != null) {
+                return response()->json([
+                    'isError' => true,
+                    'msg' => 'Email is Already Exist',
+                ]);
+            }
 
             $maildata = [
                 'name' => $request->name,

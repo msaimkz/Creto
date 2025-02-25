@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\product;
 use App\Models\ShippingCharge;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Carbon;
@@ -160,6 +161,14 @@ class CartController extends Controller
                 'status' => false,
                 'msg' => 'Please Fix The Error',
                 'errors' => $validator->errors()
+            ]);
+        }
+
+        $ExistUser = User::where('email', $request->email)->first();     
+        if ($ExistUser != null) {
+            return response()->json([
+                'isError' => true,
+                'msg' => 'Email is Already Exist',
             ]);
         }
 

@@ -270,7 +270,7 @@
                             icon: "success",
                             title: response["msg"]
                         });
-                        window.location.hred = "{{ route('index') }}"
+                        window.location.href = "{{ route('index') }}"
                     } else {
                         const Toast = Swal.mixin({
                             toast: true,

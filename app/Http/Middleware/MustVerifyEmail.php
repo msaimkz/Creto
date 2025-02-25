@@ -19,6 +19,7 @@ class MustVerifyEmail
         if (Auth::check() == true && Auth::user()->email_verified_at == null) {
 
             Auth::logout();
+            return redirect()->route('verification.notice');
         }
         return $next($request);
     }

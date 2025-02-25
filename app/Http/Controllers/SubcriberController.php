@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\SubscribeMail;
 use App\Models\Coupon;
 use App\Models\Subscriber;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,16 +41,22 @@ class SubcriberController extends Controller
             if (Auth::check() == false) {
 
                 return response()->json([
-                    'isLogin' => false,
+                    'isError' => true,
                     'msg' => 'Add Email In Subscriber Person to first Sign in',
                 ]);
             }
-    
-    
-    
-    
-    
+
+
             $user = Auth::user();
+
+            $ExistUser = User::where('email', $request->email)->first();
+            if ($ExistUser != null) {
+                return response()->json([
+                    'isError' => true,
+                    'msg' => 'Email is Already Exist',
+                ]);
+            }
+
 
             Subscriber::updateOrCreate(
                 [
@@ -70,14 +77,12 @@ class SubcriberController extends Controller
                 'status' => true,
                 'msg' => $message
             ]);
-        }
-        else{
+        } else {
 
             return response()->json([
                 'status' => false,
                 'error' => $validator->errors(),
             ]);
-
         }
     }
 
