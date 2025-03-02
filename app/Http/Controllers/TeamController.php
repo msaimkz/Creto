@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\tempimage;
+use App\Models\TempImage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -32,7 +32,7 @@ class TeamController extends Controller
     return  view('Admin.Team.team',compact('teams'));
    } 
 
-   public function create(Request $request){
+   public function create(){
 
     return  view('Admin.Team.create');
    } 
@@ -72,7 +72,7 @@ class TeamController extends Controller
 
          if(!empty($request->teamimage)){
             $tempimgid = $request->teamimage;
-            $tempimginfo = tempimage::find($tempimgid);
+            $tempimginfo = TempImage::find($tempimgid);
             $extArray = explode('.',$tempimginfo->image);
             $ext = last($extArray);
 
@@ -173,7 +173,7 @@ class TeamController extends Controller
     
              if(!empty($request->teamimage)){
                 $tempimgid = $request->teamimage;
-                $tempimginfo = tempimage::find($tempimgid);
+                $tempimginfo = TempImage::find($tempimgid);
                 $extArray = explode('.',$tempimginfo->image);
                 $ext = last($extArray);
     

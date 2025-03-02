@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
-use App\Models\news;
-use App\Models\tempimage;
+use App\Models\Article;
+use App\Models\TempImage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
@@ -35,7 +35,7 @@ class NewsController extends Controller
          ]);
 
          if($validator->passes()){
-             $news = new news();
+             $news = new Article();
              $news->title = $request->title;
              $news->slug = $request->slug;
              $news->writer = $request->writer;
@@ -49,7 +49,7 @@ class NewsController extends Controller
 
              if(!empty($request->newsimage)){
                 $tempimgid = $request->newsimage;
-                $tempimginfo = tempimage::find($tempimgid);
+                $tempimginfo = TempImage::find($tempimgid);
                 $extArray = explode('.',$tempimginfo->image);
                 $ext = last($extArray);
 
@@ -93,7 +93,7 @@ class NewsController extends Controller
 
     public function edit(Request $request,string $id)
     {
-        $news = news::find($id);
+        $news = Article::find($id);
          
         if(empty($news)){
             $request->session()->flash('error','News not Found');
@@ -116,7 +116,7 @@ class NewsController extends Controller
   
     public function update(Request $request, string $id)
     {
-        $news = news::find($id); 
+        $news = Article::find($id); 
         if(empty($news)){
             $request->session()->flash('error','News not Found');
             return response()->json([
@@ -151,7 +151,7 @@ class NewsController extends Controller
 
              if(!empty($request->newsimage)){
                 $tempimgid = $request->newsimage;
-                $tempimginfo = tempimage::find($tempimgid);
+                $tempimginfo = TempImage::find($tempimgid);
                 $extArray = explode('.',$tempimginfo->image);
                 $ext = last($extArray);
 
@@ -198,7 +198,7 @@ class NewsController extends Controller
 
     public function destroy( string $id)
     {
-        $news = news::find($id); 
+        $news = Article::find($id); 
         if(empty($news)){
             return response()->json([
                 'status' => false,

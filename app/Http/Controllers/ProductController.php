@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\product;
-use App\Models\brand;
+use App\Models\Product;
+use App\Models\Brand;
 use App\Models\Category;
-use App\Models\tempimage;
-use App\Models\productimage;
-use Illuminate\Support\Facades\Session;
+use App\Models\TempImage;
+use App\Models\ProductImage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
@@ -21,7 +20,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $brands = brand::all();
+        $brands = Brand::all();
         return view("Admin.product.create", compact('categories', 'brands'));
     }
 
@@ -54,7 +53,7 @@ class ProductController extends Controller
         }
 
         if ($validator->passes()) {
-            $product  = new product();
+            $product  = new Product();
             $product->title = $request->title;
             $product->slug = $request->slug;
             $product->model = $request->model;
@@ -76,10 +75,10 @@ class ProductController extends Controller
             if (!empty($request->img_array)) {
                 foreach ($request->img_array as $tempimgid) {
 
-                    $tempimginfo = tempimage::find($tempimgid);
+                    $tempimginfo = TempImage::find($tempimgid);
                     $extArray = explode('.', $tempimginfo->image);
                     $ext = last($extArray);
-                    $productimages = new productimage();
+                    $productimages = new ProductImage();
                     $productimages->product_id = $product->id;
                     $productimages->image = 'null';
                     $productimages->save();
@@ -126,7 +125,7 @@ class ProductController extends Controller
     }
     public function edit(Request $request, string $id)
     {
-        $product = product::find($id);
+        $product = Product::find($id);
 
         if (empty($product)) {
             $request->session()->flash('error', 'Product not Found');
@@ -137,15 +136,15 @@ class ProductController extends Controller
             return redirect()->route('product');
         }
 
-        $Productimage = productimage::where('product_id', $product->id)->get();
+        $Productimage = ProductImage::where('product_id', $product->id)->get();
         $categories = Category::all();
-        $brands = brand::all();
+        $brands = Brand::all();
         $relatedProduct = [];
 
         if ($product->related_products != '') {
             $productArray = explode(',', $product->related_products);
 
-            $relatedProduct = product::whereIn('id', $productArray)->get();
+            $relatedProduct = Product::whereIn('id', $productArray)->get();
         }
 
         return view('Admin.product.edit', compact('product', 'categories', 'brands', 'Productimage', 'relatedProduct'));
@@ -159,7 +158,7 @@ class ProductController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $product = product::find($id);
+        $product = Product::find($id);
 
         if (empty($product)) {
             $request->session()->flash('error', 'Product not Found');
@@ -223,7 +222,7 @@ class ProductController extends Controller
     }
     public function destroy(string $id)
     {
-        $product = product::find($id);
+        $product = Product::find($id);
         if (empty($product)) {
             return response()->json([
                 'status' => false,
@@ -232,14 +231,14 @@ class ProductController extends Controller
             ]);
         }
 
-        $ProductImg = productimage::where('product_id', $id)->get();
+        $ProductImg = ProductImage::where('product_id', $id)->get();
 
         if (!empty($ProductImg)) {
             foreach ($ProductImg as $ProductImgs) {
                 File::delete(public_path('uploads/product/large/' . $ProductImgs->image));
                 File::delete(public_path('uploads/product/small/' . $ProductImgs->image));
             }
-            productimage::where('product_id', $id)->delete();
+            ProductImage::where('product_id', $id)->delete();
         }
         $product->delete();
         return response()->json([
@@ -253,7 +252,7 @@ class ProductController extends Controller
     {
         $tempproduct = [];
         if ($request->term != "") {
-            $products = product::where('title', 'like', '%' . $request->term . '%')->get();
+            $products = Product::where('title', 'like', '%' . $request->term . '%')->get();
 
             if ($products != null) {
                 foreach ($products as $product) {

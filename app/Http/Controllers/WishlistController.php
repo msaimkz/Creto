@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\product;
+use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +20,7 @@ class WishlistController extends Controller
 
         $user = Auth::user();
 
-        $product = product::find($request->id);
+        $product = Product::find($request->id);
 
         Wishlist::updateOrCreate(
             [
@@ -46,7 +46,7 @@ class WishlistController extends Controller
     public function destroy ($id){
 
         $wishlist = Wishlist::find($id);
-        $product = product::find($wishlist->product_id);
+        $product = Product::find($wishlist->product_id);
         
         if(empty($wishlist)){
             return response()->json([

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Exports\OrdersExport;
 use Illuminate\Http\Request;
 use App\Exports\UsersExport;
-use App\Mail\OrderEmail;
 use Maatwebsite\Excel\Facades\Excel;
 
 

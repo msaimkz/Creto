@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\tempimage;
+use App\Models\TempImage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -19,7 +19,7 @@ class TempImageController extends Controller
             $ImgNew = time().'.'.$ext;
 
 
-            $Temp = new tempimage();
+            $Temp = new TempImage();
             $Temp->image = $ImgNew;
             $Temp->save();
 

@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('designation');
-            $table->string('img');
-            $table->text('facebook_url');
-            $table->text('youtube_url');
-            $table->text('instagram_url');
-            $table->text('X_url');
+            $table->string('img')->nullable();
+            $table->text('facebook_url')->nullable();
+            $table->text('youtube_url')->nullable();
+            $table->text('instagram_url')->nullable();
+            $table->text('X_url')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });

@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Service;
-use App\Models\tempimage;
-use Illuminate\Support\Facades\Session;
+use App\Models\TempImage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -55,7 +54,7 @@ class ServiceController extends Controller
 
             if (!empty($request->serviceimage)) {
                 $tempimgid = $request->serviceimage;
-                $tempimginfo = tempimage::find($tempimgid);
+                $tempimginfo = TempImage::find($tempimgid);
                 $extArray = explode('.', $tempimginfo->image);
                 $ext = last($extArray);
 
@@ -150,7 +149,7 @@ class ServiceController extends Controller
 
             if (!empty($request->serviceimage)) {
                 $tempimgid = $request->serviceimage;
-                $tempimginfo = tempimage::find($tempimgid);
+                $tempimginfo = TempImage::find($tempimgid);
                 $extArray = explode('.', $tempimginfo->image);
                 $ext = last($extArray);
 

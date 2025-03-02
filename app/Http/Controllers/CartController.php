@@ -6,7 +6,7 @@ use App\Models\Coupon;
 use App\Models\CustomerDetail;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\product;
+use App\Models\Product;
 use App\Models\ShippingCharge;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,14 +14,13 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Node\Expr\Empty_;
 
 class CartController extends Controller
 {
     public function AddtoCart(Request $request)
     {
 
-        $product = product::with('image')->find($request->id);
+        $product = Product::with('image')->find($request->id);
 
         if ($product == null) {
             return response()->json([
@@ -75,7 +74,7 @@ class CartController extends Controller
         $rowId = $request->rowid;
         $qty = $request->qty;
         $item = Cart::get($rowId);
-        $product = product::find($item->id);
+        $product = Product::find($item->id);
 
         if ($request->qty <= $product->qty) {
             Cart::update($rowId, $qty);
@@ -100,7 +99,7 @@ class CartController extends Controller
         $rowId = $request->rowid;
         $qty = $request->qty;
         $item = Cart::get($rowId);
-        $product = product::find($item->id);
+        $product = Product::find($item->id);
         if ($request->qty <= $product->qty) {
             Cart::update($rowId, $qty);
             $status = true;
@@ -282,8 +281,7 @@ class CartController extends Controller
             $orderitem->total = $item->price * $item->qty;
             $orderitem->save();
 
-            $product = product::find($item->id);
-            $currentqty = $product->qty;
+            $product = Product::find($item->id);
             $updatedqty = $product->qty - $item->qty;
             $product->qty = $updatedqty;
             $product->save();
@@ -312,7 +310,6 @@ class CartController extends Controller
 
         $subtotal = Cart::subtotal(2, '.', '');
         $discount = 0;
-        $discontString = '';
 
 
         // Calulate discount here

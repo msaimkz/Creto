@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
-use App\Models\brand;
+use App\Models\Brand;
 
 class BrandCnotroller extends Controller
 {
     
     public function create()
     {
-        $categories = Category::all();
-        return view('Admin.brand.create',compact('categories'));
+        return view('Admin.brand.create');
     }
 
     
@@ -25,7 +23,7 @@ class BrandCnotroller extends Controller
          ]);
  
          if($validator->passes()){
-           $brand = new brand();
+           $brand = new Brand();
            $brand->name = $request->name;
            $brand->slug = $request->slug;
            $brand->status = $request->status;
@@ -51,7 +49,7 @@ class BrandCnotroller extends Controller
 
     public function edit(string $id)
     {
-        $brand = brand::find($id);
+        $brand = Brand::find($id);
         if(empty($brand)){
             return redirect()->route('brand');
         }
@@ -61,7 +59,7 @@ class BrandCnotroller extends Controller
     public function update(Request $request, string $id)
     {
 
-        $brand = brand::find($id);   
+        $brand = Brand::find($id);   
 
         if(empty($brand)){
             $request->session()->flash('error','Category Not Found');
@@ -100,7 +98,7 @@ class BrandCnotroller extends Controller
     }
     public function destroy(string $id)
     {
-        $Brand = brand::find($id);
+        $Brand = Brand::find($id);
         if(empty($Brand)){   
         return response()->json([
             'status' => true,

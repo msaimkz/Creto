@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactEmail;
 use Illuminate\Http\Request;
-use App\Models\product;
-use App\Models\brand;
+use App\Models\Product;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Country;
 use App\Models\Order;
 use App\Models\CustomerDetail;
-use App\Models\productimage;
-use App\Models\news;
+use App\Models\Article;
 use App\Models\User;
 use App\Models\OrderItem;
 use App\Models\Rating;
@@ -28,9 +27,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-
-
-use Svg\Tag\Rect;
 
 class UserController extends Controller
 {
@@ -49,7 +45,7 @@ class UserController extends Controller
 
         $products = Product::where('status', 1)->where("is_featured", "Yes");
         $TopProducts = Product::where('status', 1)->limit(4)->get();
-        $news = news::where('status', 1)->where("is_Home", "Yes")->get();
+        $news = Article::where('status', 1)->where("is_Home", "Yes")->get();
 
 
 
@@ -82,7 +78,7 @@ class UserController extends Controller
     public function shop(Request $request, $categorySlug = null)
     {
         $categories = Category::where('status', 1)->limit(5)->get();
-        $brands = brand::where('status', 1)->limit(5)->get();
+        $brands = Brand::where('status', 1)->limit(5)->get();
         $categoryID = '';
         $brandArray = [];
         $genderArray = [];
@@ -158,8 +154,8 @@ class UserController extends Controller
         $members = Team::where('status', 1)->get();
         $customers = User::where('role', 0)->count();
         $orders = Order::where('delivery_status', 'delivered')->count();
-        $products = product::where('status', 1)->count();
-        $brands = brand::where('status', 1)->count();
+        $products = Product::where('status', 1)->count();
+        $brands = Brand::where('status', 1)->count();
         $feedbacks = Feedback::where('status', 1)->get();
 
         return view('User.about', compact('members', 'customers', 'orders', 'products', 'brands', 'feedbacks'));
@@ -185,7 +181,7 @@ class UserController extends Controller
         if ($product->related_products != '') {
             $productArray = explode(',', $product->related_products);
 
-            $relatedProducts = product::whereIn('id', $productArray)->get();
+            $relatedProducts = Product::whereIn('id', $productArray)->get();
         }
 
         // Rating  Here
@@ -311,7 +307,7 @@ class UserController extends Controller
     public function BlogDetail(Request $request, $id)
     {
 
-        $news = news::find($id);
+        $news = Article::find($id);
 
 
         if (empty($news)) {
@@ -324,7 +320,7 @@ class UserController extends Controller
 
     public function News()
     {
-        $news = news::where('status', 1)->get();
+        $news = Article::where('status', 1)->get();
         return view("User.blog", compact('news'));
     }
 

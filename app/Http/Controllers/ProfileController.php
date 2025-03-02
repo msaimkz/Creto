@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use App\Models\tempimage;
+use App\Models\TempImage;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -83,7 +80,7 @@ class ProfileController extends Controller
 
             if (!empty($request->profileImg)) {
                 $tempimgid = $request->profileImg;
-                $tempimginfo = tempimage::find($tempimgid);
+                $tempimginfo = TempImage::find($tempimgid);
                 $extArray = explode('.', $tempimginfo->image);
                 $ext = last($extArray);
                 $newImageName = $user->id . '-' . time() . '.' . $ext;

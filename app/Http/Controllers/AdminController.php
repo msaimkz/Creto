@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Mail\DeleteUserNotificationMail;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\product;
+use App\Models\Product;
 use App\Models\Category;
-use App\Models\brand;
+use App\Models\Brand;
 use App\Models\Contact;
 use App\Models\Coupon;
-use App\Models\news;
+use App\Models\Article;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\tempimage;
+use App\Models\TempImage;
 use App\Models\Wishlist;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
@@ -26,7 +26,7 @@ class AdminController extends Controller
     {
 
         $orders = Order::where('delivery_status', '!=', "cancelled")->count();
-        $products = product::where('status', 1)->count();
+        $products = Product::where('status', 1)->count();
         $users = User::where('role', 0)->count();
 
         // Total Revenue 
@@ -80,7 +80,7 @@ class AdminController extends Controller
         // Delete Temp images here
 
         $lastBeforeDate = Carbon::now()->subDay(1)->format('Y-m-d H:i:s');
-        $tempImages = tempimage::where('created_at', '<=', $lastBeforeDate)->get();
+        $tempImages = TempImage::where('created_at', '<=', $lastBeforeDate)->get();
 
         foreach ($tempImages as $tempImage) {
 
@@ -135,7 +135,7 @@ class AdminController extends Controller
 
     public function brand(Request $request)
     {
-        $brands = brand::orderby('id', 'ASC');
+        $brands = Brand::orderby('id', 'ASC');
         if (!empty($request->keyword)) {
             $brands->where('name', 'like', '%' . $request->keyword . '%');
         }
@@ -146,7 +146,7 @@ class AdminController extends Controller
 
     public function product(Request $request)
     {
-        $products = product::with('image');
+        $products = Product::with('image');
         if (!empty($request->keyword)) {
             $products->where('title', 'like', '%' . $request->keyword . '%');
             $products->orWhere('sku', 'like', '%' . $request->keyword . '%');
@@ -221,7 +221,7 @@ class AdminController extends Controller
     public function news(Request $request)
     {
 
-        $News = news::orderby('id', 'ASC');
+        $News = Article::orderby('id', 'ASC');
         if (!empty($request->keyword)) {
             $News->where('title', 'like', '%' . $request->keyword . '%');
             $News->orWhere('writer', 'like', '%' . $request->keyword . '%');
